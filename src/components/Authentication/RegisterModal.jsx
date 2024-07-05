@@ -72,17 +72,14 @@ const RegisterModal = ({ handleSwitchToLogin }) => {
                 setConfirmPassword('');
                 setErrorMessage('');
 
-                // Initially set to not verified
-                setIsEmailVerified(false);
-
             } catch (error) {
                 if (error.code === 'auth/email-already-in-use') {
                     setErrorMessage('Email already in use');
+                    setIsRegistering(false)
                 } else {
                     setErrorMessage(error.message);
+                    setIsRegistering(false)
                 }
-            } finally {
-                setIsRegistering(false); // Set registering to false after try-catch block
             }
         }
     };
@@ -105,6 +102,7 @@ const RegisterModal = ({ handleSwitchToLogin }) => {
                     <div>
                         <label>Email</label>
                         <input
+                            disabled={isRegistering}
                             type="email"
                             autoComplete='email'
                             required
@@ -143,9 +141,9 @@ const RegisterModal = ({ handleSwitchToLogin }) => {
 
                     <button
                         type="submit"
-                        disabled={isRegistering}
+                        disabled={isRegistering && !isEmailVerified}
                     >
-                        {isRegistering ? 'Signing Up...' : 'Sign Up'}
+                        {isRegistering && !isEmailVerified ? 'Signing Up...' : 'Sign Up'}
                     </button>
 
                     {/* Verification message */}
