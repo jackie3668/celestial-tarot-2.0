@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios'; 
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../authContext';
 import { doCreateUserWithEmailAndPassword } from '../../auth';
-import { createUserProfile } from '../../firestore';
+import { db } from '../../firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 const RegisterModal = ({ handleSwitchToLogin }) => {
     const { userLoggedIn } = useAuth();
@@ -11,6 +13,20 @@ const RegisterModal = ({ handleSwitchToLogin }) => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isRegistering, setIsRegistering] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [ipAddress, setIpAddress] = useState(null);
+
+    useEffect(() => {
+      const fetchIpAddress = async () => {
+          try {
+              const response = await axios.get('https://api.ipify.org?format=json');
+              setIpAddress(response.data.ip);
+          } catch (error) {
+              console.error('Error fetching IP address:', error);
+          }
+        } 
+
+          fetchIpAddress();
+      }, []);
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -22,9 +38,14 @@ const RegisterModal = ({ handleSwitchToLogin }) => {
             setIsRegistering(true);
             try {
                 const userCredential = await doCreateUserWithEmailAndPassword(email, password);
-                const { uid } = userCredential.user;
-                await createUserProfile(uid, { email });
-                // Clear input fields after successful registration
+                const { uid, email: userEmail } = userCredential.user;
+                await addDoc(collection(db, "users"), {
+                    uid: uid,
+                    email: userEmail,
+                    ipAddress: ipAddress,
+                    createdAt: serverTimestamp()
+                });
+
                 setEmail('');
                 setPassword('');
                 setConfirmPassword('');

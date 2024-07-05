@@ -33,3 +33,4 @@ export const doPasswordReset = (email) => {
 export const doPasswordChange = (password) => {
   return updatePassword(auth.currentUser, password);
 };
+

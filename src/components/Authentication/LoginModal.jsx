@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { doSignInWithEmailAndPassword } from '../../auth';
-import { useAuth } from '../../authContext';
 
 const LoginModal = ({ handleSwitchToRegister }) => {
-    const { userLoggedIn } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isSigningIn, setIsSigningIn] = useState(false);

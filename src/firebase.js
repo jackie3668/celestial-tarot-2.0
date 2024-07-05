@@ -1,4 +1,3 @@
-// firebase.js
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
@@ -6,6 +5,7 @@ import { getFirestore } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyAB_Rfs2PneOxpuIiTj63N0wHgmqoAPj6E",
   authDomain: "celestial-tarot-57f19.firebaseapp.com",
+  databaseURL: "https://celestial-tarot-57f19-default-rtdb.firebaseio.com/",
   projectId: "celestial-tarot-57f19",
   storageBucket: "celestial-tarot-57f19.appspot.com",
   messagingSenderId: "138791576960",
@@ -15,6 +15,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const firestore = getFirestore(app);
+const db = getFirestore(app)
 
-export { app, auth, firestore };
+export { app, auth, db };
