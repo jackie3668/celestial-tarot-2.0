@@ -3,7 +3,7 @@ import { useAuth } from '../../authContext';
 import { db } from '../../firebase';
 import { collection, addDoc, serverTimestamp, updateDoc, deleteField } from 'firebase/firestore';
 import LoginModal from '../../components/Authentication/LoginModal';
-import RegisterModal from '../../components/Authentication/RegisterModal';
+import RegisterModal from '../../components/Authentication/RegisterModal'; // Make sure the path is correct
 import QuestionInput from '../../components/QuestionInput/QuestionInput';
 import PastReadings from '../../components/PastReadings/PastReadings';
 import Feedback from '../../components/Feedback/Feedback';
@@ -14,13 +14,13 @@ const Reading = () => {
     const [design, setDesign] = useState('');
     const [spread, setSpread] = useState('');
     const [cards, setCards] = useState([]);
-    const [tagsInput, setTagsInput] = useState(''); // State for tags input field
-    const [tags, setTags] = useState([]); // State for tags array
-    const [noteInput, setNoteInput] = useState(''); // State for note input field
-    const [note, setNote] = useState(''); // State for saved note
+    const [tagsInput, setTagsInput] = useState('');
+    const [tags, setTags] = useState([]);
+    const [noteInput, setNoteInput] = useState('');
+    const [note, setNote] = useState('');
     const [showLogin, setShowLogin] = useState(false);
-    const [showRegister, setShowRegister] = useState(false);
-    const [editingNote, setEditingNote] = useState(false); // State to track if editing note
+    const [showRegister, setShowRegister] = useState(false); // Initialize setShowRegister state
+    const [editingNote, setEditingNote] = useState(false);
 
     const readingProps = {
         question,
@@ -49,7 +49,6 @@ const Reading = () => {
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            // Add tag from input to tags array
             setTags([...tags, tagsInput.trim()]);
             setTagsInput('');
         }
@@ -57,28 +56,25 @@ const Reading = () => {
 
     const handleSaveReading = async () => {
         try {
-            // Check if user is logged in
             if (!currentUser) {
                 console.error('User not authenticated.');
                 return;
             }
 
-            // Save reading to Firestore
             const docRef = await addDoc(collection(db, "readings"), {
                 uid: currentUser.uid,
                 question,
                 design,
                 spread,
                 cards,
-                result: 'Your result here', // Placeholder for result
-                tags, // Tags field as an array of strings
-                note, // Single note field as a string
+                result: 'Your result here',
+                tags,
+                note,
                 createdAt: serverTimestamp()
             });
 
             console.log('Reading added with ID: ', docRef.id);
 
-            // Clear form fields after saving
             setQuestion('');
             setDesign('');
             setSpread('');
@@ -93,7 +89,7 @@ const Reading = () => {
     };
 
     const handleSwitchToRegister = () => {
-        setShowRegister(true);
+        setShowRegister(true); // Update setShowRegister state
         setShowLogin(false);
     };
 
@@ -110,18 +106,18 @@ const Reading = () => {
     };
 
     const handleEditNote = () => {
-        setEditingNote(true); // Set editing mode to true
-        setNoteInput(note); // Set note input to current saved note for editing
+        setEditingNote(true);
+        setNoteInput(note);
     };
 
     const handleSaveEditedNote = () => {
-        setNote(noteInput.trim()); // Update saved note with edited note
-        setEditingNote(false); // Exit editing mode
+        setNote(noteInput.trim());
+        setEditingNote(false);
     };
 
     const handleCancelEditNote = () => {
-        setEditingNote(false); // Exit editing mode without saving
-        setNoteInput(''); // Clear note input field
+        setEditingNote(false);
+        setNoteInput('');
     };
 
     const handleRemoveTag = (index) => {
@@ -138,7 +134,7 @@ const Reading = () => {
             <button onClick={handleGetResult}>Get result</button>
             {userLoggedIn && <p className='result'>Logged in content here...</p>}
             {!userLoggedIn && showLogin && <LoginModal handleSwitchToRegister={handleSwitchToRegister} />}
-            {!userLoggedIn && showRegister && <RegisterModal handleSwitchToLogin={handleSwitchToLogin} />}
+            {!userLoggedIn && showRegister && <RegisterModal handleSwitchToLogin={handleSwitchToLogin} />} 
             <div>
                 <label>Tags:</label>
                 <div>
@@ -193,7 +189,6 @@ const Reading = () => {
             </div>
             <button onClick={handleSaveReading}>Save Reading</button>
             <PastReadings />
-            <Feedback />
         </div>
     );
 };

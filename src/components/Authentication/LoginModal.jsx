@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { doSignInWithEmailAndPassword } from '../../auth';
 
+
 const LoginModal = ({ handleSwitchToRegister }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -19,7 +20,7 @@ const LoginModal = ({ handleSwitchToRegister }) => {
                 setIsSigningIn(false);
             } catch (error) {
                 if (error.code === 'auth/invalid-credential') {
-                    setErrorMessage('The email or password entered is incorrect.');
+                    setErrorMessage('The account does not exist or the email or password entered is incorrect.');
                 } else {
                     setErrorMessage(error.message);
                 }

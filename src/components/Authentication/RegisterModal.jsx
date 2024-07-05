@@ -1,32 +1,48 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; 
-import { Navigate } from 'react-router-dom';
+import axios from 'axios';
 import { useAuth } from '../../authContext';
-import { doCreateUserWithEmailAndPassword } from '../../auth';
+import { doCreateUserWithEmailAndPassword, doSignInWithGoogle, doSendEmailVerification } from '../../auth';
 import { db } from '../../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const RegisterModal = ({ handleSwitchToLogin }) => {
-    const { userLoggedIn } = useAuth();
+    const { currentUser } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isRegistering, setIsRegistering] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [ipAddress, setIpAddress] = useState(null);
+    const [isEmailVerified, setIsEmailVerified] = useState(false);
 
     useEffect(() => {
-      const fetchIpAddress = async () => {
-          try {
-              const response = await axios.get('https://api.ipify.org?format=json');
-              setIpAddress(response.data.ip);
-          } catch (error) {
-              console.error('Error fetching IP address:', error);
-          }
-        } 
+        const fetchIpAddress = async () => {
+            try {
+                const response = await axios.get('https://api.ipify.org?format=json');
+                setIpAddress(response.data.ip);
+            } catch (error) {
+                console.error('Error fetching IP address:', error);
+            }
+        };
 
-          fetchIpAddress();
-      }, []);
+        fetchIpAddress();
+    }, []);
+
+    useEffect(() => {
+        if (currentUser && !currentUser.emailVerified) {
+            const auth = getAuth();
+            const emailVerificationInterval = setInterval(() => {
+                onAuthStateChanged(auth, (user) => {
+                    if (user && user.emailVerified) {
+                        clearInterval(emailVerificationInterval);
+                        setIsEmailVerified(true);
+                    }
+                });
+            }, 1000);
+            return () => clearInterval(emailVerificationInterval);
+        }
+    }, [currentUser]);
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -39,6 +55,11 @@ const RegisterModal = ({ handleSwitchToLogin }) => {
             try {
                 const userCredential = await doCreateUserWithEmailAndPassword(email, password);
                 const { uid, email: userEmail } = userCredential.user;
+
+                // Send email verification request
+                await doSendEmailVerification(userCredential.user);
+
+                // Store user data in Firestore
                 await addDoc(collection(db, "users"), {
                     uid: uid,
                     email: userEmail,
@@ -50,6 +71,10 @@ const RegisterModal = ({ handleSwitchToLogin }) => {
                 setPassword('');
                 setConfirmPassword('');
                 setErrorMessage('');
+
+                // Initially set to not verified
+                setIsEmailVerified(false);
+
             } catch (error) {
                 if (error.code === 'auth/email-already-in-use') {
                     setErrorMessage('Email already in use');
@@ -57,14 +82,21 @@ const RegisterModal = ({ handleSwitchToLogin }) => {
                     setErrorMessage(error.message);
                 }
             } finally {
-                setIsRegistering(false);
+                setIsRegistering(false); // Set registering to false after try-catch block
             }
         }
     };
 
-    if (userLoggedIn) {
-        return <Navigate to={'/'} replace={true} />;
-    }
+    const handleSignInWithGoogle = async () => {
+        try {
+            setIsRegistering(true);
+            await doSignInWithGoogle(); // Call Google sign-in function
+            setIsRegistering(false);
+        } catch (error) {
+            setErrorMessage(error.message);
+            setIsRegistering(false);
+        }
+    };
 
     return (
         <>
@@ -116,7 +148,20 @@ const RegisterModal = ({ handleSwitchToLogin }) => {
                         {isRegistering ? 'Signing Up...' : 'Sign Up'}
                     </button>
 
+                    {/* Verification message */}
+                    {currentUser && !isEmailVerified ? (
+                        <p>Check your email for the verification link.</p>
+                    ) : (
+                        <p>Your email is verified. You can close this window now.</p>
+                    )}
+
                 </form>
+                <div>
+                    <p>Or sign up with</p>
+                    <button onClick={handleSignInWithGoogle} disabled={isRegistering}>
+                        {isRegistering ? 'Signing In with Google...' : 'Sign Up with Google'}
+                    </button>
+                </div>
                 <div>
                     Already have an account? {'   '}
                     <button onClick={handleSwitchToLogin}>Sign In</button>
