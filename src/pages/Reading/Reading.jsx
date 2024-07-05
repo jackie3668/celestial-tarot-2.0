@@ -6,6 +6,7 @@ import LoginModal from '../../components/Authentication/LoginModal';
 import RegisterModal from '../../components/Authentication/RegisterModal';
 import QuestionInput from '../../components/QuestionInput/QuestionInput';
 import PastReadings from '../../components/PastReadings/PastReadings';
+import Feedback from '../../components/Feedback/Feedback';
 
 const Reading = () => {
     const { userLoggedIn, currentUser } = useAuth();
@@ -192,6 +193,7 @@ const Reading = () => {
             </div>
             <button onClick={handleSaveReading}>Save Reading</button>
             <PastReadings />
+            <Feedback />
         </div>
     );
 };
