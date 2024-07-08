@@ -29,21 +29,6 @@ const RegisterModal = ({ handleSwitchToLogin }) => {
         fetchIpAddress();
     }, []);
 
-    useEffect(() => {
-        if (currentUser && !currentUser.emailVerified) {
-            const auth = getAuth();
-            const emailVerificationInterval = setInterval(() => {
-                onAuthStateChanged(auth, (user) => {
-                    if (user && user.emailVerified) {
-                        clearInterval(emailVerificationInterval);
-                        setIsEmailVerified(true);
-                    }
-                });
-            }, 1000);
-            return () => clearInterval(emailVerificationInterval);
-        }
-    }, [currentUser]);
-
     const onSubmit = async (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
@@ -56,10 +41,8 @@ const RegisterModal = ({ handleSwitchToLogin }) => {
                 const userCredential = await doCreateUserWithEmailAndPassword(email, password);
                 const { uid, email: userEmail } = userCredential.user;
 
-                // Send email verification request
                 await doSendEmailVerification(userCredential.user);
 
-                // Store user data in Firestore
                 await addDoc(collection(db, "users"), {
                     uid: uid,
                     email: userEmail,
@@ -87,7 +70,7 @@ const RegisterModal = ({ handleSwitchToLogin }) => {
     const handleSignInWithGoogle = async () => {
         try {
             setIsRegistering(true);
-            await doSignInWithGoogle(); // Call Google sign-in function
+            await doSignInWithGoogle(); 
             setIsRegistering(false);
         } catch (error) {
             setErrorMessage(error.message);

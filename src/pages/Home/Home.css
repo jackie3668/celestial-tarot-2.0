@@ -1,0 +1,87 @@
+.home .content {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 10vh 4vw;
+}
+
+.home .left {
+  display: flex;
+  flex-direction: column;
+}
+
+.home .left div:nth-child(1) {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5vw;
+  margin-bottom: 2vh;
+  font-size: 1.25vw;
+}
+
+.home .left div:nth-child(1) img {
+  width: 2vw;
+}
+
+.home .left div:nth-child(1) span {
+  border: 1px solid white;
+  border-radius: 100px;
+  padding: 0 1vw;
+}
+
+.home .left div:nth-child(2) {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 11vw;
+  font-style: italic;
+  line-height: 100%;
+}
+
+.home .left div:nth-child(3) {
+  font-family: "Poppins", sans-serif;
+  font-size: 5vw;
+  font-weight: 300;
+  line-height: 50%;
+}
+
+.home .right {
+  display: flex;
+  flex-direction: column;
+  gap: 3vh;
+}
+
+.home .right div:nth-child(1) {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5vw;
+  font-size: 1.5vw;
+  font-weight: 300;
+  position: relative;
+}
+
+.home .right div:nth-child(1) img {
+  position: absolute;
+  width: 1.5rem;
+  top: 25%;
+  transform: translateY(-50%);
+  right: 100%;
+}
+
+.home .right div:nth-child(1) span {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 2vw;
+}
+
+.home .right div:nth-child(2),
+.home .right div:nth-child(2) a {
+  display: flex;
+  align-items: center;
+  font-size: 1.15vw;
+  gap: 1vw;
+}
+
+.home .right div:nth-child(2) img {
+  width: 2vw;
+}

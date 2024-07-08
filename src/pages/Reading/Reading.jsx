@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../authContext';
 import { db } from '../../firebase';
-import { collection, addDoc, serverTimestamp, updateDoc, deleteField } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import './Reading.css'
 import LoginModal from '../../components/Authentication/LoginModal';
-import RegisterModal from '../../components/Authentication/RegisterModal'; // Make sure the path is correct
+import RegisterModal from '../../components/Authentication/RegisterModal';
 import QuestionInput from '../../components/QuestionInput/QuestionInput';
 import PastReadings from '../../components/PastReadings/PastReadings';
 import Feedback from '../../components/Feedback/Feedback';
+import { doSendEmailVerification } from '../../auth';
 
 const Reading = () => {
     const { userLoggedIn, currentUser } = useAuth();
@@ -19,8 +21,9 @@ const Reading = () => {
     const [noteInput, setNoteInput] = useState('');
     const [note, setNote] = useState('');
     const [showLogin, setShowLogin] = useState(false);
-    const [showRegister, setShowRegister] = useState(false); // Initialize setShowRegister state
+    const [showRegister, setShowRegister] = useState(false); 
     const [editingNote, setEditingNote] = useState(false);
+    const [isEmailVerified, setIsEmailVerified] = useState(false);
 
     const readingProps = {
         question,
@@ -37,12 +40,17 @@ const Reading = () => {
         setShowLogin(false);
     }, [userLoggedIn]);
 
+    useEffect(() => {
+        if (currentUser) {
+            setIsEmailVerified(currentUser.emailVerified)
+        };
+    }, [userLoggedIn]);
+
     const handleGetResult = () => {
         if (!userLoggedIn) {
             setShowLogin(true);
-        } else {
-            // Perform actions on "Get result" click
-            // For example, show a result or perform other actions
+        } else if (!isEmailVerified) {
+            doSendEmailVerification(currentUser)
         }
     };
 
@@ -89,7 +97,7 @@ const Reading = () => {
     };
 
     const handleSwitchToRegister = () => {
-        setShowRegister(true); // Update setShowRegister state
+        setShowRegister(true); 
         setShowLogin(false);
     };
 
@@ -127,14 +135,15 @@ const Reading = () => {
     };
 
     return (
-        <div>
+        <div className='reading-container container'>
             <h1>Reading</h1>
             <QuestionInput {...readingProps} />
             {question && <p>{question}</p>}
             <button onClick={handleGetResult}>Get result</button>
-            {userLoggedIn && <p className='result'>Logged in content here...</p>}
+            {userLoggedIn && isEmailVerified && <p className='result'>Logged in content here...</p>}
             {!userLoggedIn && showLogin && <LoginModal handleSwitchToRegister={handleSwitchToRegister} />}
             {!userLoggedIn && showRegister && <RegisterModal handleSwitchToLogin={handleSwitchToLogin} />} 
+            {userLoggedIn && !isEmailVerified && <p>Verify your email before you continue. A link has been sent</p>}
             <div>
                 <label>Tags:</label>
                 <div>
@@ -188,7 +197,6 @@ const Reading = () => {
                 )}
             </div>
             <button onClick={handleSaveReading}>Save Reading</button>
-            <PastReadings />
         </div>
     );
 };
