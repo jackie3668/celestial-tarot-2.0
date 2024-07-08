@@ -20,6 +20,7 @@ function App() {
           outerScale={2.5}
           clickables={[
             'a',
+            'li',
             'input[type="text"]',
             'input[type="email"]',
             'input[type="number"]',
@@ -34,11 +35,11 @@ function App() {
               target: '.about-section',
               options: {
                 innerSize: 100,
-                outerSize: 200,
+                outerSize: 300,
                 color: '255,255,255',
                 outerAlpha: 0.7,
-                innerScale: 0.1,
-                outerScale: 2.5
+                innerScale: 0.5,
+                outerScale: 3.5
               }
             }
           ]}

@@ -23,6 +23,7 @@
 
 .home .left div:nth-child(1) img {
   width: 2vw;
+  height: 2vw;
 }
 
 .home .left div:nth-child(1) span {
@@ -62,8 +63,8 @@
 
 .home .right div:nth-child(1) img {
   position: absolute;
-  width: 1.5rem;
-  top: 25%;
+  width: 2vw;
+  top: 4%;
   transform: translateY(-50%);
   right: 100%;
 }
@@ -85,3 +86,4 @@
 .home .right div:nth-child(2) img {
   width: 2vw;
 }
+

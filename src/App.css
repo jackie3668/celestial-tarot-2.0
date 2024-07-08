@@ -283,6 +283,14 @@ h1 {
 	        animation: fade-in-fwd 1s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 }
 
+.spinning {
+  animation: spin 5s linear infinite;
+}
+
+.floating {
+  animation: float 2s ease-in-out infinite;
+}
+
 @-webkit-keyframes slide-in-right {
   0% {
     -webkit-transform: translateX(1000px);
@@ -359,4 +367,25 @@ h1 {
             transform: translateZ(0);
     opacity: 1;
   }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes float {
+	0% {
+		transform: translatey(0px);
+	}
+	50% {
+		transform: translatey(10px);
+	}
+	100% {
+		transform: translatey(0px);
+	}
 }

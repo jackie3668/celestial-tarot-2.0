@@ -12,7 +12,7 @@ const Home = () => {
       <WaterWave 
         className='ripple-container' 
         imageUrl={background}
-        dropRadius={50}
+        dropRadius={40}
         perturbance={0.01}
         resolution={256}
         interactive={true}
@@ -21,7 +21,7 @@ const Home = () => {
         <div className="content">
           <div className="left">
             <div>
-              <img src={star} alt="" />
+              <img src={star} className='spinning' />
               <p>ECHOES OF</p>
               <span>THE STARS</span>
             </div>
@@ -34,11 +34,11 @@ const Home = () => {
           </div>
           <div className="right">
             <div>
-              <img src={star} alt="" />
+              <img src={star} className='spinning' />
               <p><span>Stars </span>illumination your<br /><span>Celestial path</span></p>
             </div>
             <div>
-              <Link to='./reading'>
+              <Link to='./reading' className='floating' >
                 CLICK TO BEGIN <img src={arrow} alt="" />
               </Link>
             </div>
