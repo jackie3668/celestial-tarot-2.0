@@ -157,21 +157,27 @@ const Reading = () => {
             )}
             </WaterWave>
             <div className="reading-container">
-                <div className="heading">
-                    <img src={icon1} alt="" />
-                    <h1>Question</h1>
+                <div>
+                    <div className="heading">
+                        <img src={icon1} alt="" />
+                        <h1>Question</h1>
+                    </div>
+                    <QuestionInput {...readingProps} />
                 </div>
-                <QuestionInput {...readingProps} />
-                <div className="heading">
-                    <img src={icon2} alt="" />
-                    <h1>Design</h1>
+                <div>
+                    <div className="heading">
+                        <img src={icon2} alt="" />
+                        <h1>Design</h1>
+                    </div>
+                    <Design />
                 </div>
-                <Design />
-                <div className="heading">
-                    <img src={icon3} alt="" />
-                    <h1>Spread</h1>
+                <div>
+                    <div className="heading">
+                        <img src={icon3} alt="" />
+                        <h1>Spread</h1>
+                    </div>
+                    <Spread />
                 </div>
-                <Spread />
                 <button onClick={handleGetResult}>Get result</button>
             </div>
             

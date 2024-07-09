@@ -12,7 +12,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid wheat;
+  gap: 8vh;
+}
+
+.reading-container>div {
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
 }
 
 .reading .heading {
@@ -23,11 +29,11 @@
 }
 
 .reading .heading h1 {
-  font-size: 2vw;
+  font-size: 1.5vw;
 }
 
 .reading .heading img {
-  width: 3vw;
-  height: 3vw;
+  width: 2vw;
+  height: 2vw;
 }
 
