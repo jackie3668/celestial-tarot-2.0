@@ -1,0 +1,87 @@
+.question input {
+  border: none;
+  font-family: "Poppins", sans-serif;
+  font-weight: 200;
+  background-color: transparent; 
+}
+
+.question .input-container {
+  display: flex;
+  align-items: center;
+  border-radius: 30px;
+  padding: 5px;
+  width: 50vw;
+  max-width: 800px;
+}
+
+
+.question .input-container input {
+  font-size: 1.1rem;
+  padding: 0.5rem 2rem;
+  border: none;
+  outline: none;
+  flex: 1;
+}
+
+.question .input-container.focused {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.question .input-container input::placeholder {
+  font-family: "Poppins", sans-serif;
+  font-weight: 200;
+  color: white;
+  opacity: 0.5;
+  font-size: 1.1rem;
+}
+
+.question .input-container button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  margin-right: 1rem;
+}
+
+.question .input-container button img {
+  width: 1.5rem;
+}
+
+.question .input-container .vertical-line {
+  width: 2px;
+  height: 2.5rem;
+  background-color: white;
+  margin: 0 10px;
+  opacity: 0.3;
+}
+
+.question ul {
+  position: absolute;
+  opacity: 0;
+  z-index: -999;
+}
+
+.question ul.focused {
+  opacity: 1;
+  width: 100%;
+  z-index: 1;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  padding: 1rem 0;
+  font-size: 1.1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.question ul.focused li {
+  padding: 0.5rem 2rem;
+}
+
+.question ul.focused li:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 0.5rem 2rem;
+  font-weight: 300;
+}

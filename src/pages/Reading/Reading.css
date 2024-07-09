@@ -1,3 +1,33 @@
-.reading-container {
-  background-image: url('../../assets/images/reading.png');
+.reading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
 }
+
+.reading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid wheat;
+}
+
+.reading .heading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.reading .heading h1 {
+  font-size: 2vw;
+}
+
+.reading .heading img {
+  width: 3vw;
+  height: 3vw;
+}
+

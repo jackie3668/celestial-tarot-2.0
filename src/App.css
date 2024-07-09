@@ -15,9 +15,12 @@
 
 body, p, button, a, link, li {
   font-family: "Poppins", sans-serif;
+  font-weight: 200;
   text-decoration: none;
   list-style: none;
   color: inherit;
+  background-color: transparent;
+  border: none;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -95,6 +98,10 @@ h1 {
   z-index: -1; 
 }
 
+.glass {
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
 /* Font Styles */
 /* Poppins */
 .poppins-thin {

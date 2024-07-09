@@ -10,7 +10,7 @@ import Home from './pages/Home/Home';
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <Router basename='celestial-tarot-2.0'>
         <AnimatedCursor
           innerSize={8}
           outerSize={12}

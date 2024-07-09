@@ -2,13 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../authContext';
 import { db } from '../../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import WaterWave from "react-water-wave";
 import './Reading.css'
+import background from '../../assets/images/reading.png'
+import { doSendEmailVerification } from '../../auth';
 import LoginModal from '../../components/Authentication/LoginModal';
 import RegisterModal from '../../components/Authentication/RegisterModal';
 import QuestionInput from '../../components/QuestionInput/QuestionInput';
 import PastReadings from '../../components/PastReadings/PastReadings';
 import Feedback from '../../components/Feedback/Feedback';
-import { doSendEmailVerification } from '../../auth';
+import Design from '../../components/Design/Design';
+import Spread from '../../components/Spread/Spread';
+import icon1 from '../../assets/images/reading-icon (1).png'
+import icon2 from '../../assets/images/reading-icon (2).png'
+import icon3 from '../../assets/images/reading-icon (3).png'
 
 const Reading = () => {
     const { userLoggedIn, currentUser } = useAuth();
@@ -135,12 +142,40 @@ const Reading = () => {
     };
 
     return (
-        <div className='reading-container container'>
-            <h1>Reading</h1>
-            <QuestionInput {...readingProps} />
-            {question && <p>{question}</p>}
-            <button onClick={handleGetResult}>Get result</button>
-            {userLoggedIn && isEmailVerified && <p className='result'>Logged in content here...</p>}
+        <div className='reading'>
+            <WaterWave
+                className='ripple-container' 
+                imageUrl={background}
+                dropRadius={40}
+                perturbance={0.01}
+                resolution={256}
+                interactive={true}
+            >
+            {({ drop }) => ( 
+            <>
+            </>
+            )}
+            </WaterWave>
+            <div className="reading-container">
+                <div className="heading">
+                    <img src={icon1} alt="" />
+                    <h1>Question</h1>
+                </div>
+                <QuestionInput {...readingProps} />
+                <div className="heading">
+                    <img src={icon2} alt="" />
+                    <h1>Design</h1>
+                </div>
+                <Design />
+                <div className="heading">
+                    <img src={icon3} alt="" />
+                    <h1>Spread</h1>
+                </div>
+                <Spread />
+                <button onClick={handleGetResult}>Get result</button>
+            </div>
+            
+            {/* {userLoggedIn && isEmailVerified && <p className='result'>Logged in content here...</p>}
             {!userLoggedIn && showLogin && <LoginModal handleSwitchToRegister={handleSwitchToRegister} />}
             {!userLoggedIn && showRegister && <RegisterModal handleSwitchToLogin={handleSwitchToLogin} />} 
             {userLoggedIn && !isEmailVerified && <p>Verify your email before you continue. A link has been sent</p>}
@@ -196,7 +231,8 @@ const Reading = () => {
                     </div>
                 )}
             </div>
-            <button onClick={handleSaveReading}>Save Reading</button>
+            <button onClick={handleSaveReading}>Save Reading</button> */}
+
         </div>
     );
 };
