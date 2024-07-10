@@ -39,3 +39,17 @@
   height: 2vw;
 }
 
+.reading button {
+  
+}
+
+.reading button {
+  display: flex;
+  align-items: center;
+  font-size: 1.15vw;
+  gap: 1vw;
+}
+
+.reading button img {
+  width: 2vw;
+}

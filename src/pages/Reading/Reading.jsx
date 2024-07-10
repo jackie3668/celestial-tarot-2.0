@@ -16,6 +16,7 @@ import Spread from '../../components/Spread/Spread';
 import icon1 from '../../assets/images/reading-icon (1).png'
 import icon2 from '../../assets/images/reading-icon (2).png'
 import icon3 from '../../assets/images/reading-icon (3).png'
+import arrow from '../../assets/ui/arrow_cricle.png'
 
 const Reading = () => {
     const { userLoggedIn, currentUser } = useAuth();
@@ -52,6 +53,12 @@ const Reading = () => {
             setIsEmailVerified(currentUser.emailVerified)
         };
     }, [userLoggedIn]);
+
+    useEffect(() => {
+        if (question) {
+            document.querySelector('#get-results').classList = 'floating'
+        }
+    }, [question, setQuestion])
 
     const handleGetResult = () => {
         if (!userLoggedIn) {
@@ -178,7 +185,7 @@ const Reading = () => {
                     </div>
                     <Spread  {...readingProps} />
                 </div>
-                <button onClick={handleGetResult}>Get result</button>
+                <button onClick={handleGetResult} id='get-results'>CLICK TO BEGIN <img src={arrow} alt="" /></button>
             </div>
             
             {/* {userLoggedIn && isEmailVerified && <p className='result'>Logged in content here...</p>}

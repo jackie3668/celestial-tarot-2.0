@@ -29,7 +29,13 @@ const Spread = () => {
     };
   }, []);
 
-  const items = ['Spread 1', 'Spread 2', 'Spread 3', 'Spread 4', 'Spread 5'];
+  const items = [
+    'One Card',
+    'Three Card',
+    'Celtic Cross',
+    'Horseshoe',
+    'Relationship'
+  ];
 
   return (
     <div className="spread-container" ref={dropdownRef}>

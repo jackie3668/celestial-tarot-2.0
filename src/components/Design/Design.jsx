@@ -22,7 +22,7 @@ const Design = ({ design, setDesign}) => {
         {designs.map((design, index) => (
           <div
             key={design.id}
-            className={`card ${index === selectedCardIndex ? 'selected floating' : ''}`}
+            className={`card ${index === selectedCardIndex ? 'selected' : ''}`}
             onClick={() => handleCardClick(index)}
           >
             <img src={design.image} alt={`Design ${design.id}`} />
