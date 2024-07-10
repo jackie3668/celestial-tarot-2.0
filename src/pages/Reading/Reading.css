@@ -10,7 +10,6 @@
   margin-top: 10vh;
   width: 80vw;
   height: 80vh;
-  border: 1px solid red;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -31,7 +30,7 @@
 }
 
 .reading .heading h1 {
-  font-size: 1.5vw;
+  font-size: 1.5rem;
 }
 
 .reading .heading img {
@@ -40,16 +39,19 @@
 }
 
 .reading button {
-  
-}
-
-.reading button {
   display: flex;
   align-items: center;
-  font-size: 1.15vw;
+  font-size: 1rem;
   gap: 1vw;
+  position: relative;
 }
 
 .reading button img {
   width: 2vw;
+}
+
+.reading .modal {
+  position: absolute;
+  top: 110%;
+  font-size: 0.75rem;
 }

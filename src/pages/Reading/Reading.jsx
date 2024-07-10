@@ -17,6 +17,7 @@ import icon1 from '../../assets/images/reading-icon (1).png'
 import icon2 from '../../assets/images/reading-icon (2).png'
 import icon3 from '../../assets/images/reading-icon (3).png'
 import arrow from '../../assets/ui/arrow_cricle.png'
+import Shuffle from '../../components/Shuffle/Shuffle';
 
 const Reading = () => {
     const { userLoggedIn, currentUser } = useAuth();
@@ -56,15 +57,21 @@ const Reading = () => {
 
     useEffect(() => {
         if (question) {
-            document.querySelector('#get-results').classList = 'floating'
+            document.querySelector('button#get-results').classList = 'floating'
         }
     }, [question, setQuestion])
 
     const handleGetResult = () => {
-        if (!userLoggedIn) {
-            setShowLogin(true);
-        } else if (!isEmailVerified) {
-            doSendEmailVerification(currentUser)
+        if (question) {
+            document.querySelector('.reading-container').classList.add('hide')
+        } else {
+            document.querySelector('.modal').classList.remove('fade-out')
+            document.querySelector('.modal').classList.remove('floating')
+            document.querySelector('.modal').classList.add('heartbeat')
+            setTimeout(() => {
+                document.querySelector('.modal').classList.remove('heartbeat');
+                document.querySelector('.modal').classList.add('fade-out')
+              }, 1500);
         }
     };
 
@@ -185,9 +192,13 @@ const Reading = () => {
                     </div>
                     <Spread  {...readingProps} />
                 </div>
-                <button onClick={handleGetResult} id='get-results'>CLICK TO BEGIN <img src={arrow} alt="" /></button>
+                <button onClick={handleGetResult} id='get-results'>
+                    CLICK TO BEGIN 
+                    <img src={arrow} alt="" />
+                    <div className="modal fade-out">Please enter a question</div>
+                </button>
             </div>
-            
+            <Shuffle {...readingProps}/>
             {/* {userLoggedIn && isEmailVerified && <p className='result'>Logged in content here...</p>}
             {!userLoggedIn && showLogin && <LoginModal handleSwitchToRegister={handleSwitchToRegister} />}
             {!userLoggedIn && showRegister && <RegisterModal handleSwitchToLogin={handleSwitchToLogin} />} 

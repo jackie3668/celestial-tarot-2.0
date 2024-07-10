@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Spread.css';
 import arrow from '../../assets/ui/down-arrow.png';
 
-const Spread = () => {
+const Spread = ({ spread, setSpread }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState('Select a spread');
   const dropdownRef = useRef(null);
@@ -13,6 +13,7 @@ const Spread = () => {
 
   const handleItemClick = (item) => {
     setSelectedItem(item);
+    setSpread(item)
     setIsOpen(false);
   };
 
