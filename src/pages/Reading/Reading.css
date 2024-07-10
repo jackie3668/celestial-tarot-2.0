@@ -3,12 +3,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  height: 100vh;
 }
 
 .reading-container {
   display: flex;
+  margin-top: 10vh;
+  width: 80vw;
+  height: 80vh;
+  border: 1px solid red;
   flex-direction: column;
   justify-content: center;
   align-items: center;

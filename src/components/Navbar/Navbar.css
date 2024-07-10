@@ -7,6 +7,7 @@ nav {
 }
 
 nav .menu {
+  width: 100%;
   opacity: 1;
   display: flex;
   justify-content: space-between;
@@ -15,6 +16,7 @@ nav .menu {
 }
 
 nav .menu-icon {
+  flex: 1;
   display: none;
   position: absolute;
   top: 1rem;
@@ -34,13 +36,23 @@ nav ul:nth-child(1) li:nth-child(2) {
 }
 
 nav ul {
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1rem;
 }
 
+nav ul:nth-child(1) {
+  justify-content: flex-start;
+}
+
+nav ul:nth-child(3) {
+  justify-content: flex-end;
+}
+
 nav .logo {
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -169,14 +169,14 @@ const Reading = () => {
                         <img src={icon2} alt="" />
                         <h1>Design</h1>
                     </div>
-                    <Design />
+                    <Design  {...readingProps} />
                 </div>
                 <div>
                     <div className="heading">
                         <img src={icon3} alt="" />
                         <h1>Spread</h1>
                     </div>
-                    <Spread />
+                    <Spread  {...readingProps} />
                 </div>
                 <button onClick={handleGetResult}>Get result</button>
             </div>

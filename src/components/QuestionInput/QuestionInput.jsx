@@ -24,7 +24,7 @@ const QuestionInput = ({ question, setQuestion }) => {
   const handleBlur = () => {
     setTimeout(() => {
       setIsFocused(false);
-    }, 500); 
+    }, 300); 
   };
   
   const handleChange = (e) => {

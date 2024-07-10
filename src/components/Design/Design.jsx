@@ -3,7 +3,7 @@ import './Design.css';
 import design_1 from '../../assets/designs/design-1/0.png';
 import design_2 from '../../assets/designs/design-2/0.jpg';
 
-const Design = () => {
+const Design = ({ design, setDesign}) => {
   const [selectedCardIndex, setSelectedCardIndex] = useState(-1); // Start with no card selected
 
   const designs = [
@@ -13,6 +13,7 @@ const Design = () => {
 
   const handleCardClick = (index) => {
     setSelectedCardIndex(index === selectedCardIndex ? -1 : index); 
+    setDesign(index)
   };
 
   return (
