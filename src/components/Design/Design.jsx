@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import './Design.css';
-import design_1 from '../../assets/designs/design-1/0.png';
-import design_2 from '../../assets/designs/design-2/0.jpg';
+import design_1 from '../../assets/designs/design0/0.png';
+import design_2 from '../../assets/designs/design1/0.jpg';
 
 const Design = ({ design, setDesign}) => {
-  const [selectedCardIndex, setSelectedCardIndex] = useState(-1); // Start with no card selected
+  const [selectedCardIndex, setSelectedCardIndex] = useState(-1);
 
   const designs = [
     { id: 1, image: design_1 },

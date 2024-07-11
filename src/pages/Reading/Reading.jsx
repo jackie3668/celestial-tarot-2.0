@@ -22,7 +22,7 @@ import Shuffle from '../../components/Shuffle/Shuffle';
 const Reading = () => {
     const { userLoggedIn, currentUser } = useAuth();
     const [question, setQuestion] = useState('');
-    const [design, setDesign] = useState('');
+    const [design, setDesign] = useState(0);
     const [spread, setSpread] = useState('');
     const [cards, setCards] = useState([]);
     const [tagsInput, setTagsInput] = useState('');
@@ -117,43 +117,43 @@ const Reading = () => {
         }
     };
 
-    const handleSwitchToRegister = () => {
-        setShowRegister(true); 
-        setShowLogin(false);
-    };
+    // const handleSwitchToRegister = () => {
+    //     setShowRegister(true); 
+    //     setShowLogin(false);
+    // };
 
-    const handleSwitchToLogin = () => {
-        setShowLogin(true);
-        setShowRegister(false);
-    };
+    // const handleSwitchToLogin = () => {
+    //     setShowLogin(true);
+    //     setShowRegister(false);
+    // };
 
-    const handleAddNote = () => {
-        if (noteInput.trim() !== '') {
-            setNote(noteInput.trim());
-            setNoteInput('');
-        }
-    };
+    // const handleAddNote = () => {
+    //     if (noteInput.trim() !== '') {
+    //         setNote(noteInput.trim());
+    //         setNoteInput('');
+    //     }
+    // };
 
-    const handleEditNote = () => {
-        setEditingNote(true);
-        setNoteInput(note);
-    };
+    // const handleEditNote = () => {
+    //     setEditingNote(true);
+    //     setNoteInput(note);
+    // };
 
-    const handleSaveEditedNote = () => {
-        setNote(noteInput.trim());
-        setEditingNote(false);
-    };
+    // const handleSaveEditedNote = () => {
+    //     setNote(noteInput.trim());
+    //     setEditingNote(false);
+    // };
 
-    const handleCancelEditNote = () => {
-        setEditingNote(false);
-        setNoteInput('');
-    };
+    // const handleCancelEditNote = () => {
+    //     setEditingNote(false);
+    //     setNoteInput('');
+    // };
 
-    const handleRemoveTag = (index) => {
-        const updatedTags = [...tags];
-        updatedTags.splice(index, 1);
-        setTags(updatedTags);
-    };
+    // const handleRemoveTag = (index) => {
+    //     const updatedTags = [...tags];
+    //     updatedTags.splice(index, 1);
+    //     setTags(updatedTags);
+    // };
 
     return (
         <div className='reading'>
@@ -170,7 +170,7 @@ const Reading = () => {
             </>
             )}
             </WaterWave>
-            <div className="reading-container">
+            {/* <div className="reading-container">
                 <div>
                     <div className="heading">
                         <img src={icon1} alt="" />
@@ -197,8 +197,10 @@ const Reading = () => {
                     <img src={arrow} alt="" />
                     <div className="modal fade-out">Please enter a question</div>
                 </button>
+            </div> */}
+            <div className="shuffle-container">
+                <Shuffle {...readingProps}/>
             </div>
-            <Shuffle {...readingProps}/>
             {/* {userLoggedIn && isEmailVerified && <p className='result'>Logged in content here...</p>}
             {!userLoggedIn && showLogin && <LoginModal handleSwitchToRegister={handleSwitchToRegister} />}
             {!userLoggedIn && showRegister && <RegisterModal handleSwitchToLogin={handleSwitchToLogin} />} 

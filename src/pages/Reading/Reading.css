@@ -5,7 +5,8 @@
   align-items: center;
 }
 
-.reading-container {
+.reading-container,
+.shuffle-container {
   display: flex;
   margin-top: 10vh;
   width: 80vw;

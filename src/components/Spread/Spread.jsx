@@ -31,8 +31,9 @@ const Spread = ({ spread, setSpread }) => {
   }, []);
 
   const items = [
-    'One Card',
     'Three Card',
+    'Five Card',
+    'Yes or No',
     'Celtic Cross',
     'Horseshoe',
     'Relationship'

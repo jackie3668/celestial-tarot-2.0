@@ -1,0 +1,66 @@
+@keyframes rotate-cards {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(var(--angle, 360deg));
+  }
+}
+
+.card-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-list {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.card-list__item {
+  --angle: 0deg;
+  --x-offset: 0vw; 
+  animation: rotate-cards 3s linear forwards;
+  transform-origin: center;
+  position: absolute;
+  width: 100px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.horizontal-layout {
+  animation: horizontal-layout 1s linear forwards;
+}
+
+@keyframes horizontal-layout{
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(calc(-30vw + var(--x-offset, 0vw))); 
+  }
+}
