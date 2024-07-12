@@ -23,7 +23,7 @@ const Reading = () => {
     const { userLoggedIn, currentUser } = useAuth();
     const [question, setQuestion] = useState('');
     const [design, setDesign] = useState(0);
-    const [spread, setSpread] = useState('');
+    const [spread, setSpread] = useState(0);
     const [cards, setCards] = useState([]);
     const [tagsInput, setTagsInput] = useState('');
     const [tags, setTags] = useState([]);

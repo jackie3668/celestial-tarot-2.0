@@ -4,44 +4,59 @@ import design0Image from '../../assets/designs/design0/0.png';
 import design1Image from '../../assets/designs/design1/0.jpg';
 import spreadData from '../../data/spreadData';
 
-const Shuffle = ({ design }) => {
+const Shuffle = ({ spread, design }) => {
   const designImage = design === 0 ? design0Image : design1Image;
   const [isCircleAnimationComplete, setIsCircleAnimationComplete] = useState(false);
-  const [selectedCards, setSelectedCards] = useState([])
+  const [selectedCards, setSelectedCards] = useState([]);
+  const [selectedCount, setSelectedCount] = useState(0);
+
   useEffect(() => {
     const circleAnimationTimeout = setTimeout(() => {
       setIsCircleAnimationComplete(true);
     }, 3000); 
-  
+
     return () => clearTimeout(circleAnimationTimeout);
   }, []);
+
   const handleClick = (index) => {
-    setSelectedCards(prevSelected => {
-      if (prevSelected.includes(index)) {
+    console.log(spread);
+    if (selectedCount < spreadData[spread].length) {
+      const position = spreadData[spread][selectedCount].position;
+      
+      setSelectedCards(prevCards => [
+        ...prevCards,
+        { index, x: position.x, y: position.y }  
+      ]);
 
-        return prevSelected.filter(cardIndex => cardIndex !== index);
-      } else {
+      setSelectedCount(prevCount => prevCount + 1);
 
-        return [...prevSelected, index];
+      if (selectedCount === spreadData[spread].length) {
+        console.log('Stop');
       }
-    });
+    }
   };
-  const xSpread = '200px'; 
-  const ySpread = '200px'; 
+
 
   return (
     <div className='card-wrapper'>
+
       <ul className={`card-list ${isCircleAnimationComplete ? '' : ''}`}>
         {[...Array(30)].map((_, index) => (
             <li
             key={index}
             onClick={() => handleClick(index)}
-            className={`card-list__item ${selectedCards.includes(index) ? 'fade-out-bottom' : ''} ${isCircleAnimationComplete && !selectedCards.includes(index) ? 'horizontal-layout' : ''}`}
+            className={`card-list__item ${
+              selectedCards[index] ? 'fade-out-bottom' : ''
+            } ${
+              isCircleAnimationComplete && !selectedCards[index]
+                ? 'horizontal-layout'
+                : ''
+            }`}
             style={{ 
               '--angle': `${index * (360 / 30)}deg`, 
               '--x-offset': `${index * 2}vw`,
-              '--x-spread': xSpread,
-              '--y-spread': ySpread
+              '--x-spread': selectedCards[index] ? selectedCards[index].x : 0, 
+              '--y-spread': selectedCards[index] ? selectedCards[index].y : 0  // Set selectedCards[index].y if selected, otherwise ySpread
           }}           
            >                             
             <div className='card'>

@@ -11,9 +11,9 @@ const Spread = ({ setSpread }) => {
     setIsOpen(!isOpen);
   };
 
-  const handleItemClick = (item) => {
-    setSelectedItem(item);
-    setSpread(item)
+  const handleItemClick = (index) => {
+    setSelectedItem(items[index]);
+    setSpread(index)
     setIsOpen(false);
   };
 
@@ -52,7 +52,7 @@ const Spread = ({ setSpread }) => {
               <div 
                 key={index} 
                 className="dropdown-item" 
-                onClick={() => handleItemClick(item)}
+                onClick={() => handleItemClick(index)}
               >
                 {item}
               </div>

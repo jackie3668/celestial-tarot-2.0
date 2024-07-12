@@ -1,6 +1,7 @@
 @keyframes rotate-cards {
   from {
-    transform: rotate(0deg);
+
+  list-style-type: none;    transform: rotate(0deg);
   }
   to {
     transform: rotate(var(--angle, 360deg));
@@ -21,7 +22,6 @@
   top: 10%;
   left: 50%;
   transform: translate(-50%, -50%);
-  list-style-type: none;
   padding: 0;
   margin: 0;
 }
@@ -32,8 +32,7 @@
   animation: rotate-cards 3s linear forwards;
   transform-origin: center;
   position: absolute;
-  width: 100px;
-  height: 150px;
+  width: 5vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -87,8 +86,8 @@
     opacity: 1;
   }
   100% {
-    -webkit-transform: translate(calc(10vw + var(--x-spread)), calc(10vh + 50px));
-            transform: translate(calc(10vw + var(--x-spread)), calc(10vh + 50px));
+    -webkit-transform: translate(calc(-2.5vw + var(--x-spread)), calc(25vh + var(--y-spread)));
+            transform: translate(calc(-2.5vw + var(--x-spread)), calc(25vh + var(--y-spread)));
     opacity: 1;
   }
 }
@@ -99,8 +98,8 @@
     opacity: 1;
   }
   100% {
-    -webkit-transform: translate(calc(10vw + var(--x-spread)), calc(10vh + 50px));
-            transform: translate(calc(10vw + var(--x-spread)), calc(10vh + 50px));
+    -webkit-transform: translate(calc(-2.5vw + var(--x-spread)), calc(25vh + var(--y-spread)));
+            transform: translate(calc(-2.5vw + var(--x-spread)), calc(25vh + var(--y-spread)));
     opacity: 1;
   }
 }
