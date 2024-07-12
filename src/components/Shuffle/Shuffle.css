@@ -26,7 +26,34 @@
   margin: 0;
 }
 
+.card-list-back {
+  border: 1px solid red;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.card-list-back .card-list__item {
+  border: 1px solid red;
+}
+
 .card-list__item {
+  --angle: 0deg;
+  --x-offset: 0vw; 
+  animation: rotate-cards 3s linear forwards;
+  transform-origin: center;
+  position: absolute;
+  width: 5vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-list__item-back {
   --angle: 0deg;
   --x-offset: 0vw; 
   animation: rotate-cards 3s linear forwards;

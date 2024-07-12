@@ -38,7 +38,25 @@ const Shuffle = ({ spread, design, selectedCards, setSelectedCards }) => {
 
   return (
     <div className='card-wrapper'>
-
+      <ul className={`card-list-back ${isCircleAnimationComplete ? '' : ''}`}>
+        {[...Array(30)].map((_, index) => (
+            <li
+            key={index}
+            className={`card-list__item-back  ${
+              isCircleAnimationComplete ? 'horizontal-layout'
+                : ''
+            }`}
+            style={{ 
+              '--angle': `${index * (360 / 30)}deg`, 
+              '--x-offset': `${index * 2}vw`,
+          }}           
+           >                             
+            <div className='card'>
+              <img src={designImage} alt={`Design ${design}`} />
+            </div>
+          </li>
+        ))}
+      </ul>
       <ul className={`card-list ${isCircleAnimationComplete ? '' : ''}`}>
         {[...Array(30)].map((_, index) => (
             <li
