@@ -5,6 +5,7 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import WaterWave from "react-water-wave";
 import './Reading.css'
 import background from '../../assets/images/reading.png'
+import spreadData from '../../data/spreadData';
 import { doSendEmailVerification } from '../../auth';
 import LoginModal from '../../components/Authentication/LoginModal';
 import RegisterModal from '../../components/Authentication/RegisterModal';
@@ -23,8 +24,8 @@ const Reading = () => {
     const { userLoggedIn, currentUser } = useAuth();
     const [question, setQuestion] = useState('');
     const [design, setDesign] = useState(0);
-    const [spread, setSpread] = useState(0);
-    const [cards, setCards] = useState([]);
+    const [spread, setSpread] = useState(3);
+    const [selectedCards, setSelectedCards] = useState([]);
     const [tagsInput, setTagsInput] = useState('');
     const [tags, setTags] = useState([]);
     const [noteInput, setNoteInput] = useState('');
@@ -38,11 +39,11 @@ const Reading = () => {
         question,
         design,
         spread,
-        cards,
+        selectedCards,
         setQuestion,
         setDesign,
         setSpread,
-        setCards,
+        setSelectedCards,
     };
 
     useEffect(() => {
@@ -61,7 +62,7 @@ const Reading = () => {
         }
     }, [question, setQuestion])
 
-    const handleGetResult = () => {
+    const handleBegin = () => {
         if (question) {
             document.querySelector('.reading-container').classList.add('hide')
         } else {
@@ -95,7 +96,7 @@ const Reading = () => {
                 question,
                 design,
                 spread,
-                cards,
+                selectedCards,
                 result: 'Your result here',
                 tags,
                 note,
@@ -107,7 +108,7 @@ const Reading = () => {
             setQuestion('');
             setDesign('');
             setSpread('');
-            setCards([]);
+            setSelectedCards([]);
             setTags([]);
             setTagsInput('');
             setNote('');
@@ -117,6 +118,9 @@ const Reading = () => {
         }
     };
 
+    const handleGetResult = () => {
+
+    }
     // const handleSwitchToRegister = () => {
     //     setShowRegister(true); 
     //     setShowLogin(false);
@@ -192,7 +196,7 @@ const Reading = () => {
                     </div>
                     <Spread  {...readingProps} />
                 </div>
-                <button onClick={handleGetResult} id='get-results'>
+                <button onClick={handleBegin} id='get-results'>
                     CLICK TO BEGIN 
                     <img src={arrow} alt="" />
                     <div className="modal fade-out">Please enter a question</div>
@@ -200,6 +204,16 @@ const Reading = () => {
             </div> */}
             <div className="shuffle-container">
                 <Shuffle {...readingProps}/>
+      
+                { selectedCards.length === spreadData[spread].length ? 
+                <button onClick={handleGetResult} className='floating' id='get-results'>
+                    CLICK TO GET RESULT 
+                    <img src={arrow} alt="" />
+                </button>
+                : <></> }
+            </div>
+            <div className="results-container">
+                hi
             </div>
             {/* {userLoggedIn && isEmailVerified && <p className='result'>Logged in content here...</p>}
             {!userLoggedIn && showLogin && <LoginModal handleSwitchToRegister={handleSwitchToRegister} />}

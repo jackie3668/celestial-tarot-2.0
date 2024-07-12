@@ -1,7 +1,6 @@
 @keyframes rotate-cards {
   from {
-
-  list-style-type: none;    transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   to {
     transform: rotate(var(--angle, 360deg));
@@ -22,6 +21,7 @@
   top: 10%;
   left: 50%;
   transform: translate(-50%, -50%);
+  list-style-type: none;
   padding: 0;
   margin: 0;
 }

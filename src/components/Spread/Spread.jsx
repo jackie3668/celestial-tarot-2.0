@@ -34,7 +34,6 @@ const Spread = ({ setSpread }) => {
     'Three Card',
     'Five Card',
     'Yes or No',
-    'Celtic Cross',
     'Horseshoe',
     'Relationship'
   ];

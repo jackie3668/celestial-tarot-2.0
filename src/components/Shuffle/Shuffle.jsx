@@ -4,10 +4,9 @@ import design0Image from '../../assets/designs/design0/0.png';
 import design1Image from '../../assets/designs/design1/0.jpg';
 import spreadData from '../../data/spreadData';
 
-const Shuffle = ({ spread, design }) => {
+const Shuffle = ({ spread, design, selectedCards, setSelectedCards }) => {
   const designImage = design === 0 ? design0Image : design1Image;
   const [isCircleAnimationComplete, setIsCircleAnimationComplete] = useState(false);
-  const [selectedCards, setSelectedCards] = useState([]);
   const [selectedCount, setSelectedCount] = useState(0);
 
   useEffect(() => {
