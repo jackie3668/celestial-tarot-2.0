@@ -91,7 +91,7 @@
 
 .auth-modal button[type="submit"]:hover,
 .auth-modal button:hover {
-
+  color: white;
 }
 
 .auth-modal span {

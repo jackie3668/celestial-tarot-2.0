@@ -37,6 +37,34 @@
   gap: 6vh;
 }
 
+.journal select {
+  background-color: transparent;
+}
+.summary-view {
+  gap: 2vh;
+}
+
+.summary-view .summary-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.summary-view .summary-header h2 {
+  text-align: center;
+}
+
+.summary-view .summary-header .icon-wrapper {
+  align-self: flex-end;
+  display: flex;
+  gap: 0.5vw;
+}
+
+.summary-view .summary-header .icon-wrapper .icon {
+  font-size: 0.875rem;
+}
+
 .summary-view, 
 .journal .result-wrapper {
   position: relative;

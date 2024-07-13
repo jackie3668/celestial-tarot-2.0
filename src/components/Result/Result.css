@@ -232,9 +232,6 @@ button.hidden {
   color: white;
 }
 
-.result-wrapper .note .input-wrapper .button-wrapper {
-  height: 100%;
-}
 
 .result-wrapper .note .input-wrapper button {
   padding: 0.5vh 1vw;

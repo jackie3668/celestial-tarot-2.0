@@ -109,7 +109,7 @@ const Result = ({ design, question, cards, isLoading, setIsLoading, result, note
     } else {
       console.log(note);
       setNote(note)
-      setErrorMessageNote('Saved');
+      setErrorMessageNote('Note saved');
       document.querySelector('.save-wrapper .tip-2').classList.remove('fade-out')
 
       document.querySelector('.save-wrapper .tip-2').classList.add('fade-in-fwd')
@@ -133,7 +133,7 @@ const Result = ({ design, question, cards, isLoading, setIsLoading, result, note
       return;
     } else {
       setNote(note)
-      setErrorMessageNote('Saved');
+      setErrorMessageNote('Note saved.');
       document.querySelector('.save-wrapper .tip-2').classList.remove('fade-out')
 
       document.querySelector('.save-wrapper .tip-2').classList.add('fade-in-fwd')
@@ -187,7 +187,8 @@ const Result = ({ design, question, cards, isLoading, setIsLoading, result, note
                 </div>
               </div>
               <div className="save-wrapper">
-                <span>Add tags and note to your reading, and save to your journal.</span>
+                {save ? <span>Add tags and note to your reading, and save to your journal.</span> : <span>You can view and edit in  your journal.</span>}
+                {save ? (                
                 <div className="editor">
                   <div className="tags">
                     <div className='header' onClick={() => setShowTagInput(!showTagInput)} ><FontAwesomeIcon icon={faPlus} /><p>Add Tags</p><span>Separate by comma</span></div>
@@ -230,7 +231,7 @@ const Result = ({ design, question, cards, isLoading, setIsLoading, result, note
                     )}
                     <span className="tip-2 fade-out">{errorMessageNote}</span>
                   </div>
-                </div>
+                </div>) : <></>}
                 <div className='button-wrapper'>
                   {save ? <button className='save' onClick={handleSaveReading} >Save reading</button> : <></>}
                   <button className='restart' onClick={handleRestart}>Restart</button>

@@ -13,7 +13,7 @@ import { faPlus, faTag, faTimes, faArrowLeft, faFilter, faSort, faSearch } from 
 const Journal = () => {
   const { currentUser } = useAuth();
   const [readings, setReadings] = useState([]);
-  const [allReadings, setAllReadings] = useState([]);
+  const [allReadings, setAllReadings] = useState([])
   const [showTagInput, setShowTagInput] = useState(false);
   const [newTag, setNewTag] = useState('');
   const [tags, setTags] = useState([]);
@@ -24,7 +24,7 @@ const Journal = () => {
   const [activeReading, setActiveReading] = useState(null);
   const [searchInput, setSearchInput] = useState('');
   const [showSearchBar, setShowSearchBar] = useState(false);
-  const [selectedTags, setSelectedTags] = useState(['hello', 'career']); 
+  const [selectedTag, setSelectedTag] = useState('');
   const [sortOption, setSortOption] = useState('date-desc'); // 'date-asc' or 'date-desc'
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const Journal = () => {
           ...doc.data(),
         }));
         setReadings(userReadings);
-        setAllReadings(userReadings);
+        setAllReadings(userReadings)
 
         // Extract tags from all readings
         const allTags = userReadings.reduce((acc, reading) => {
@@ -96,38 +96,34 @@ const Journal = () => {
     setActiveReading(null);
   };
 
-  const handleTagChange = (tag) => {
-    const updatedSelectedTags = [...selectedTags];
-    if (updatedSelectedTags.includes(tag)) {
-      // If tag is already selected, remove it
-      updatedSelectedTags.splice(updatedSelectedTags.indexOf(tag), 1);
+  const handleToggleTag = (tag) => {
+    if (selectedTag === tag) {
+      setSelectedTag('');
     } else {
-      // Otherwise, add the tag
-      updatedSelectedTags.push(tag);
+      setSelectedTag(tag);
     }
-    setSelectedTags(updatedSelectedTags);
-    filterReadings(updatedSelectedTags);
+    filterReadings(tag);
   };
-  
-  const handleClearFilter = () => {
-    setSelectedTags([]); // Clear selectedTags
-    setReadings(allReadings); // Show all readings
-  };
-  
 
-  const filterReadings = (selectedTags) => {
-    if (!selectedTags || selectedTags.length === 0) {
-      // If no tags are selected, show all readings
+  const handleClearFilters = () => {
+    setSelectedTag('');
+    setReadings([]);
+  };
+
+  const filterReadings = (selectedTag) => {
+    console.log(selectedTag);
+    if (selectedTag === '') {
+      console.log('empty');
+      // If no tag is selected, show all readings
       setReadings(allReadings);
     } else {
-      // Filter readings based on the selected tags
+      // Filter readings based on the selected tag
       const filteredReadings = allReadings.filter(reading =>
-        selectedTags.some(tag => reading.tags.includes(tag))
+        reading.tags.includes(selectedTag)
       );
       setReadings(filteredReadings);
     }
   };
-  
 
   const handleSortChange = (option) => {
     setSortOption(option);
@@ -190,24 +186,15 @@ const Journal = () => {
               <h2>Past Readings</h2>
               <div className="icon-wrapper">
                 <FontAwesomeIcon icon={faFilter} className="icon" />
-                <div className="dropdown-wrapper">
+                <select
+                  value={selectedTag}
+                  onChange={(e) => handleToggleTag(e.target.value)}
+                >
+                  <option value="">Select a Tag</option>
                   {tags.map((tag, index) => (
-                    <label key={index}>
-                      <input
-                        type="checkbox"
-                        value={tag}
-                        checked={selectedTags.includes(tag)}
-                        onChange={() => handleTagChange(tag)}
-                      />
-                      {tag}
-                    </label>
+                    <option key={index} value={tag}>{tag}</option>
                   ))}
-                  {selectedTags.length > 0 && (
-                    <button className="clear-filter" onClick={handleClearFilter}>
-                      <FontAwesomeIcon icon={faTimes} /> Clear Filter
-                    </button>
-                  )}
-                </div>
+                </select>
                 <FontAwesomeIcon icon={faSort} className="icon" />
                 <select
                   value={sortOption}
@@ -289,23 +276,23 @@ const Journal = () => {
                               </div>
                               {showTagInput && (
                                 <div className='input-wrapper'>
-                                  {tags && (
+                                  {tags &&
                                     <ul>
                                       {tags.map((tag, index) => (
                                         <li key={index}>
                                           <label>
                                             <input
-                                              type="checkbox"
+                                              type="radio"
                                               value={tag}
-                                              checked={selectedTags.includes(tag)}
-                                              onChange={() => handleTagChange(tag)}
+                                              checked={selectedTag === tag}
+                                              onChange={() => handleToggleTag(tag)}
                                             />
                                             {tag}
                                           </label>
                                         </li>
                                       ))}
                                     </ul>
-                                  )}
+                                  }
                                   <input
                                     type="text"
                                     value={newTag}
@@ -316,7 +303,6 @@ const Journal = () => {
                                   <button onClick={handleAddTag}>Add Tag</button>
                                 </div>
                               )}
-
                               <span className="tip fade-out">{errorMessageTag}</span>
                             </div>
                             <div className="note">
