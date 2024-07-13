@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import loadingGif from '../../assets/images/loading.gif';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
-import './Result.css'; // Import your CSS for styling
+import './Result.css';
+import icon from '../../assets/images/reading-icon (1).png'
+import star from '../../assets/ui/star.png'
 
 const Result = ({ design, question, cards, isLoading, setIsLoading, result }) => {
   const [currentHeadingIndex, setCurrentHeadingIndex] = useState(0);
@@ -41,6 +43,10 @@ const Result = ({ design, question, cards, isLoading, setIsLoading, result }) =>
     resultWrapper.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const splitResult = result ? result.split('\n\n') : [];
+  const allExceptLast = splitResult.slice(0, -1);
+  const lastItem = splitResult.slice(-1)[0];
+
 
   return (
     <div className='result'>
@@ -56,28 +62,31 @@ const Result = ({ design, question, cards, isLoading, setIsLoading, result }) =>
       ) : (
         <div className='result-wrapper'>
           <div className="content-wrapper">
-            <h1>{question}</h1>
-            {result ? (
-              result.split('\n\n').map((item, index) => {
-                const [cardName, interpretation] = item.split(':');
-                return (
-                  <div key={index} className="card-container">
-                    <div className="card-image">
-                      <img src={images[index]} className='card-image' alt="" />
-                    </div>
-                    <div className='card-text'>
-                      <h2>{index}</h2>
-                      <h3>{cardName}</h3>
-                      <p>{interpretation}</p>
-                    </div>
+            <h1><img src={icon} alt="" />{question}</h1>
+            {allExceptLast.map((item, index) => {
+              const [cardName, interpretation] = item.split(':');
+              return (
+                <div key={index} className="card-container">
+                  <div className="card-image">
+                    <img src={images[index]} className='card-image' alt="" />
                   </div>
-                );
-              })
-            ) : (
-              <p>No result available.</p>
+                  <div className='card-text'>
+                    <h3><img src={star} alt="" /><span>{cardName}</span></h3>
+                    <p>{interpretation}</p>
+                  </div>
+                </div>
+              );
+            })}
+            {lastItem && (
+              <div className="last-item-wrapper">
+                <div className='card-text'>
+                  <h3><span>{lastItem.split(':')[0]}</span></h3>
+                  <p>{lastItem.split(':')[1]}</p>
+                </div>
+              </div>
             )}
-            <FontAwesomeIcon icon={faAngleDown} onClick={handleScrollDown} className="scroll-down-icon" />
           </div>
+          <FontAwesomeIcon icon={faAngleDown} onClick={handleScrollDown} className="scroll-down-icon" />
         </div>
       )}
     </div>

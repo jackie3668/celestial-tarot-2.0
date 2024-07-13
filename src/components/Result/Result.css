@@ -34,13 +34,12 @@ button.hidden {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 5%;
   min-width: 600px;
   max-width: 900px;
-  padding: 5vh 5vw;
-  height: 75vh;
+  padding: 8vh 5vw;
+  height: 80vh;
   margin-top: 15vh;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(50px);
   border-radius: 2vw;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -50,9 +49,24 @@ button.hidden {
 .result-wrapper .content-wrapper {
   overflow-y: auto;
   scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6vh;
 }
 
-.result-wrapper img {
+.result-wrapper h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 300;
+  gap: 1vw;
+}
+
+.result-wrapper h1 img {
+  width: 3vw;
+}
+
+.result-wrapper .card-image img {
   width: 6vw;
   height: auto;
   max-width: 200px;
@@ -66,11 +80,35 @@ button.hidden {
 .result-wrapper .card-text {
   display: flex;
   flex-direction: column;
+  gap: 2vh;
+}
+
+.result-wrapper .card-text h3 {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5vw;
+}
+
+.result-wrapper .card-text h3 span {
+  border: 1px solid white;
+  padding: 0 1vw;
+  border-radius: 50px;
+}
+
+.result-wrapper .card-text img {
+  width: 1.5vw;
+}
+
+.result-wrapper .last-item-wrapper .card-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .result-wrapper .scroll-down-icon {
   position: sticky;
-  bottom: 2vh;
+  bottom: 1.5vh;
   z-index: 1;
   padding: 0.5rem;
   left: 50%;
