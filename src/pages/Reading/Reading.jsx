@@ -3,6 +3,7 @@ import { useAuth } from '../../authContext';
 import { db } from '../../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import WaterWave from "react-water-wave";
+import axios from 'axios';
 import './Reading.css'
 import background from '../../assets/images/reading.png'
 import spreadData from '../../data/spreadData';
@@ -19,15 +20,19 @@ import icon2 from '../../assets/images/reading-icon (2).png'
 import icon3 from '../../assets/images/reading-icon (3).png'
 import arrow from '../../assets/ui/arrow_cricle.png'
 import Shuffle from '../../components/Shuffle/Shuffle';
+import Result from '../../components/Result/Result';
 
 const Reading = () => {
     const { userLoggedIn, currentUser } = useAuth();
     const [question, setQuestion] = useState('');
     const [design, setDesign] = useState(0);
-    const [spread, setSpread] = useState(3);
+    const [spread, setSpread] = useState(0);
     const [selectedCards, setSelectedCards] = useState([]);
+    const [cards, setCards] = useState([]);
     const [tagsInput, setTagsInput] = useState('');
     const [tags, setTags] = useState([]);
+    const [result, setResult] = useState('')
+    const [isLoading, setIsLoading] = useState(true); 
     const [noteInput, setNoteInput] = useState('');
     const [note, setNote] = useState('');
     const [showLogin, setShowLogin] = useState(false);
@@ -40,10 +45,16 @@ const Reading = () => {
         design,
         spread,
         selectedCards,
+        cards,
+        result,
+        isLoading,
         setQuestion,
         setDesign,
         setSpread,
         setSelectedCards,
+        setCards,
+        setResult,
+        setIsLoading
     };
 
     useEffect(() => {
@@ -58,7 +69,7 @@ const Reading = () => {
 
     useEffect(() => {
         if (question) {
-            document.querySelector('button#get-results').classList = 'floating'
+            document.querySelector('button#begin').classList = 'floating'
         }
     }, [question, setQuestion])
 
@@ -74,7 +85,10 @@ const Reading = () => {
                 document.querySelector('.modal').classList.add('fade-out')
               }, 1500);
         }
+        document.querySelector('.shuffle-container').classList.remove('hide')
+        document.querySelector('.reading-container').classList.add('hide')
     };
+
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
@@ -109,6 +123,8 @@ const Reading = () => {
             setDesign('');
             setSpread('');
             setSelectedCards([]);
+            setCards([])
+            setResult('')
             setTags([]);
             setTagsInput('');
             setNote('');
@@ -119,8 +135,33 @@ const Reading = () => {
     };
 
     const handleGetResult = () => {
-
+        document.querySelector('.shuffle-container').classList.add('hide')
+        document.querySelector('.results-container').classList.remove('hide')
+        fetchData()
     }
+
+    const fetchData = async () => {
+        try {
+        const cardStates = cards.map(card => `${card.name} ${card.reversal}`).join(', ');
+
+    
+        const prompt = `My question is: ${question}. I drew ${cards.length} cards. They are: ${cardStates}. Return 35 words per card, formatted like 'Card Name (Reversal Status)', separated by line break, start with the card name at the beginning. Take upright/reverse into account. Lastly, give one paragraph summary start with 'Summary:'. (35 words).`;
+    
+        console.log("Prompt:", prompt);
+    
+        const response = await axios.post('https://celestial-backend-bjdf.onrender.com/sendMsgToOpenAI', {
+            userMessage: prompt,
+        }, {
+            timeout: 60000, 
+        });
+    
+        console.log("Axios Response:", response);
+        setResult(response.data.generatedResponse);
+        setIsLoading(false)
+        } catch (error) {
+        console.error('Error fetching data:', error);
+        }
+    };
     // const handleSwitchToRegister = () => {
     //     setShowRegister(true); 
     //     setShowLogin(false);
@@ -174,7 +215,7 @@ const Reading = () => {
             </>
             )}
             </WaterWave>
-            {/* <div className="reading-container">
+            <div className="reading-container">
                 <div>
                     <div className="heading">
                         <img src={icon1} alt="" />
@@ -196,24 +237,38 @@ const Reading = () => {
                     </div>
                     <Spread  {...readingProps} />
                 </div>
-                <button onClick={handleBegin} id='get-results'>
+                <button onClick={handleBegin} id='begin'>
                     CLICK TO BEGIN 
                     <img src={arrow} alt="" />
                     <div className="modal fade-out">Please enter a question</div>
                 </button>
-            </div> */}
-            <div className="shuffle-container">
+            </div>
+            <div className="shuffle-container hide">
                 <Shuffle {...readingProps}/>
-      
-                { selectedCards.length === spreadData[spread].length ? 
-                <button onClick={handleGetResult} className='floating' id='get-results'>
+                {selectedCards.length === spreadData[spread].length ? (
+                // If the number of selected cards matches the spread length
+                cards.length === spreadData[spread].length ? (
+                    // If the number of flipped cards matches the spread length
+                    <button onClick={handleGetResult} className='floating' id='get-results'>
+                    CLICK TO GET RESULT 
+                    <img src={arrow} alt="" />
+                    </button>
+                ) : (
+                    // If not all cards are flipped
+                    <button className='floating' id='get-results'>
+                    FLIP THE CARDS
+                    </button>
+                )
+                ) : (
+                // If not all cards are selected
+                <button className='hide' id='get-results'>
                     CLICK TO GET RESULT 
                     <img src={arrow} alt="" />
                 </button>
-                : <></> }
+                )}
             </div>
-            <div className="results-container">
-                hi
+            <div className="results-container hide">
+                <Result {...readingProps}/>
             </div>
             {/* {userLoggedIn && isEmailVerified && <p className='result'>Logged in content here...</p>}
             {!userLoggedIn && showLogin && <LoginModal handleSwitchToRegister={handleSwitchToRegister} />}

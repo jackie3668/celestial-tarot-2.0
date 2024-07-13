@@ -56,3 +56,11 @@
   top: 110%;
   font-size: 0.75rem;
 }
+
+.reading .shuffle-container .hide {
+  opacity: 0;
+}
+
+.reading .shuffle-container .floating {
+  opacity: 1;
+}
