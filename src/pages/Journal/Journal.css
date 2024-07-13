@@ -18,6 +18,37 @@
   z-index: 3;
 }
 
+.content-wrapper {
+  position: relative;
+}
+
+.content-wrapper>h3 {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0.25vh 1.5vw;
+  border: 1px solid white;
+  border-radius: 50px;
+  margin: -1vh;
+}
+
+.spread-display {
+  flex-wrap: wrap; /* Ensure cards wrap to the next line if they exceed the width */
+  justify-content: center; /* Center items horizontally */
+  align-items: flex-start; /* Align items at the top */
+  position: relative;
+  top: 0%;
+  left: calc(50% - 1.5vw);
+  margin-top: 6vh;
+  margin-bottom: 24vh;
+}
+
+.spread-display .spread-card-container img {
+  width: 3vw;
+}
+
 .journal .result-wrapper {
   display: flex;
   margin-top: 10vh;
@@ -40,6 +71,7 @@
 .journal select {
   background-color: transparent;
 }
+
 .summary-view {
   gap: 2vh;
 }
@@ -103,7 +135,7 @@
   width: 3vw;
 }
 
-.journal .result-wrapper .card-image img {
+.journal .result-wrapper .card-container .card-image img {
   width: 6vw;
   height: auto;
   max-width: 200px;

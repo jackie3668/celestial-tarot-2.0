@@ -66,7 +66,7 @@ button.hidden {
   width: 3vw;
 }
 
-.result-wrapper .card-image img {
+.result-wrapper .card-container .card-image img {
   width: 6vw;
   height: auto;
   max-width: 200px;

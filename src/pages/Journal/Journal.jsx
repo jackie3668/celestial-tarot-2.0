@@ -273,8 +273,25 @@ const Journal = () => {
                 <div key={index} className='result-wrapper'>
                   <div className="content-wrapper">
                     <h1><img src={icon} alt="" />{question}</h1>
+                    <h3>Your Spread</h3>
                     <div className="spread-display">
-                      
+      
+                      {activeReading !== null && readings[activeReading].selectedCards.map((card, index) => (
+                        <div
+                          key={index}
+                          className="spread-card-container"
+                          style={{
+                            position: 'absolute',
+                            left: `calc(${card.x} / 2)`, 
+                            top: `calc(${card.y} - 50%)`, 
+                            transform: 'translateY(-50%)' 
+                          }}
+                          >
+                          <div className="card-image">
+                            <img src={images[index]} className='card-image' alt="" />
+                          </div>
+                        </div>
+                      ))}
                     </div>
                     {allExceptLast.map((item, index) => {
                       const [cardName, interpretation] = item.split(':');

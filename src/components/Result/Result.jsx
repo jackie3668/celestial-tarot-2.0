@@ -138,7 +138,9 @@ const Result = ({ design, question, cards, isLoading, setIsLoading, result, note
 
       document.querySelector('.save-wrapper .tip-2').classList.add('fade-in-fwd')
       setTimeout(() => {
+        if (document.querySelector('.save-wrapper .tip-2').classList)  {
         document.querySelector('.save-wrapper .tip-2').classList.add('fade-out')
+      }
       }, 1500); 
       setShowNoteInput(false)
       return
