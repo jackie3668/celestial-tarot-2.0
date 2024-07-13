@@ -88,6 +88,17 @@ const Journal = () => {
     }
   };
 
+  const handleSearchKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      if (showSearchBar) {
+        handleSearch();
+      } else {
+        handleAddTag();
+      }
+    }
+  };
+  
+
   const handleReadingClick = (index) => {
     setActiveReading(index);
   };
@@ -108,7 +119,7 @@ const Journal = () => {
     setSelectedTags(updatedSelectedTags);
     filterReadings(updatedSelectedTags);
   };
-  
+
   const handleClearFilter = () => {
     setSelectedTags([]); // Clear selectedTags
     setReadings(allReadings); // Show all readings
@@ -142,15 +153,18 @@ const Journal = () => {
   };
 
   const handleSearch = () => {
-    const filteredReadings = readings.filter(reading => {
+    const filteredReadings = allReadings.filter(reading => {
       const searchText = searchInput.toLowerCase();
+      // Check if the search input matches the reading's question, tags, or notes
       return (
         reading.question.toLowerCase().includes(searchText) ||
-        reading.note.toLowerCase().includes(searchText)
+        reading.note.toLowerCase().includes(searchText) ||
+        reading.tags.some(tag => tag.toLowerCase().includes(searchText))
       );
     });
     setReadings(filteredReadings);
   };
+
 
   const formatDate = (timestamp) => {
     if (!timestamp || !timestamp.seconds) {
@@ -224,6 +238,7 @@ const Journal = () => {
                     type="text"
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
+                    onKeyDown={handleSearchKeyPress}
                     placeholder="Search results..."
                   />
                   <button onClick={handleSearch}>Search</button>
@@ -258,6 +273,9 @@ const Journal = () => {
                 <div key={index} className='result-wrapper'>
                   <div className="content-wrapper">
                     <h1><img src={icon} alt="" />{question}</h1>
+                    <div className="spread-display">
+                      
+                    </div>
                     {allExceptLast.map((item, index) => {
                       const [cardName, interpretation] = item.split(':');
                       return (
