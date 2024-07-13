@@ -1,36 +1,44 @@
-.result {
+.journal {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.loading-animation {
+.detail-view {
+  position: relative;
+}
+
+.return-icon {
   position: absolute;
-  bottom: 15vh;
+  top: 5%;
+  right: 5%;
+  z-index: 3;
+}
+
+.journal .result-wrapper {
   display: flex;
+  margin-top: 10vh;
+  width: 80vw;
+  height: 80vh;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 8vh;
 }
 
-.loading-animation .loading {
-  width: 12vw;
-  position: absolute;
-  top: 20%;
-  transform: translateY(-50%);
-  opacity: 0.5;
+.journal .result-wrapper .content-wrapper {
+  overflow-y: auto;
+  scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6vh;
 }
 
-.hidden {
-  display: none;
-}
-
-button.hidden {
-  opacity: 0;
-  display: inline;
-}
-
-.result-wrapper {
+.summary-view, 
+.journal .result-wrapper {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -46,7 +54,8 @@ button.hidden {
   box-shadow: 1px 1px 15px 3px rgba(0, 0, 0, 0.1);
 }
 
-.result-wrapper .content-wrapper {
+
+.journal .result-wrapper .content-wrapper {
   overflow-y: auto;
   scrollbar-width: none;
   display: flex;
@@ -54,7 +63,7 @@ button.hidden {
   gap: 6vh;
 }
 
-.result-wrapper h1 {
+.journal .result-wrapper h1 {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -62,51 +71,51 @@ button.hidden {
   gap: 1vw;
 }
 
-.result-wrapper h1 img {
+.journal .result-wrapper h1 img {
   width: 3vw;
 }
 
-.result-wrapper .card-image img {
+.journal .result-wrapper .card-image img {
   width: 6vw;
   height: auto;
   max-width: 200px;
 }
 
-.result-wrapper .card-container {
+.journal .result-wrapper .card-container {
   display: flex;
   gap: 5vw;
 }
 
-.result-wrapper .card-text {
+.journal .result-wrapper .card-text {
   display: flex;
   flex-direction: column;
   gap: 2vh;
 }
 
-.result-wrapper .card-text h3 {
+.journal .result-wrapper .card-text h3 {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 0.5vw;
 }
 
-.result-wrapper .card-text h3 span {
+.journal .result-wrapper .card-text h3 span {
   border: 1px solid white;
   padding: 0 1vw;
   border-radius: 50px;
 }
 
-.result-wrapper .card-text img {
+.journal .result-wrapper .card-text img {
   width: 1.5vw;
 }
 
-.result-wrapper .last-item-wrapper .card-text {
+.journal .result-wrapper .last-item-wrapper .card-text {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.result-wrapper .scroll-down-icon {
+.journal .result-wrapper .scroll-down-icon {
   position: sticky;
   bottom: 1.5vh;
   z-index: 1;
@@ -121,42 +130,42 @@ button.hidden {
   animation: arrow_float 2s ease-in-out infinite;
 }
 
-.result-wrapper .save-wrapper {
+.journal .result-wrapper .save-wrapper {
   display: flex;
   flex-direction: column;
   gap: 1.5vh;
 }
 
-.result-wrapper .save-wrapper .tags,
-.result-wrapper .save-wrapper .note {
+.journal .result-wrapper .save-wrapper .tags,
+.journal .result-wrapper .save-wrapper .note {
   display: flex;
   flex-direction: column;
   gap: 0.5vh;
   position: relative;
 }
 
-.result-wrapper .save-wrapper span {
+.journal .result-wrapper .save-wrapper span {
   font-size: 0.75rem;
   opacity: 0.6;
 }
-.result-wrapper .save-wrapper input::placeholder {
+.journal .result-wrapper .save-wrapper input::placeholder {
   color: rgba(255, 255, 255, 0.3);
 }
 
-.result-wrapper .save-wrapper .editor {
+.journal .result-wrapper .save-wrapper .editor {
   display: flex;
   flex-direction: column;
   gap: 1.5vh;
 }
 
-.result-wrapper .header {
+.journal .result-wrapper .header {
   display: flex;
   font-size: 0.875rem;
   align-items: center;
   gap: 0.75vw;
 }
 
-.result-wrapper .input-wrapper {
+.journal .result-wrapper .input-wrapper {
   font-size: 0.75rem;
   display: flex;
   justify-content: space-between;
@@ -169,18 +178,18 @@ button.hidden {
   margin-bottom: 2vh; 
 }
 
-.result-wrapper .tags .input-wrapper {
+.journal .result-wrapper .tags .input-wrapper {
   padding-left: 0;
 }
 
-.result-wrapper .note .input-wrapper {
+.journal .result-wrapper .note .input-wrapper {
   padding: 1vh 1vw;
   align-items: flex-end;
   gap: 0;
   position: relative;
 }
 
-.result-wrapper .input-wrapper input {
+.journal .result-wrapper .input-wrapper input {
   padding: 0.3vh 0.5vw;
   background-color: transparent;
   flex: 1;
@@ -190,12 +199,12 @@ button.hidden {
   border: none;
 }
 
-.result-wrapper .tip {
+.journal .result-wrapper .tip {
   position: absolute;
   top: calc(100% - 1.5vh)
 }
 
-.result-wrapper .input-wrapper textarea {
+.journal .result-wrapper .input-wrapper textarea {
   resize: none; 
   padding: 0.3vh 0.5vw;
   background-color: transparent;
@@ -206,18 +215,18 @@ button.hidden {
   border: none;
 }
 
-.result-wrapper .input-wrapper input:focus {
+.journal .result-wrapper .input-wrapper input:focus {
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 3px;
 }
 
-.result-wrapper .input-wrapper textarea:focus {
+.journal .result-wrapper .input-wrapper textarea:focus {
   outline: none; 
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 3px;
 }
 
-.result-wrapper .input-wrapper textarea {
+.journal .result-wrapper .input-wrapper textarea {
   scrollbar-width: none;
   overflow-y: auto;
   height: 100%;
@@ -227,36 +236,36 @@ button.hidden {
   padding: 1vh 2vw;
 }
 
-.result-wrapper .input-wrapper textarea:focus + button {
+.journal .result-wrapper .input-wrapper textarea:focus + button {
   /* background-color: rgba(255, 255, 255, 0.1); */
   color: white;
 }
 
-.result-wrapper .note .input-wrapper .button-wrapper {
+.journal .result-wrapper .note .input-wrapper .button-wrapper {
   height: 100%;
 }
 
-.result-wrapper .note .input-wrapper button {
+.journal .result-wrapper .note .input-wrapper button {
   padding: 0.5vh 1vw;
   align-self: flex-end;
 }
 
-.result-wrapper .input-wrapper button {
+.journal .result-wrapper .input-wrapper button {
   font-size: 0.75rem;
   white-space: nowrap;
 }
 
-.result-wrapper .input-wrapper ul {
+.journal .result-wrapper .input-wrapper ul {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5vw;
 }
 
-.result-wrapper .input-wrapper ul li:first-child {
+.journal .result-wrapper .input-wrapper ul li:first-child {
   margin-left: 1vw;
 }
 
-.result-wrapper .input-wrapper ul li {
+.journal .result-wrapper .input-wrapper ul li {
   padding: 0 0.5vw;
   display: flex;
   justify-content: center;
@@ -266,7 +275,7 @@ button.hidden {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-.result-wrapper .last-item-wrapper .button-wrapper {
+.journal .result-wrapper .button-wrapper {
   padding: 3vh 0;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   display: flex;
@@ -275,27 +284,27 @@ button.hidden {
   gap: 2vw;
 }
 
-.result-wrapper .button-wrapper button,
-.result-wrapper .button-wrapper a {
+.journal .result-wrapper .button-wrapper button,
+.journal .result-wrapper .button-wrapper a {
   font-size: 0.875rem;
   padding: 0.5vh 2vw;
   border-radius: 50px;
   transition: all 0.3s ease-in-out;
 }
 
-.result-wrapper .button-wrapper button.save {
+.journal .result-wrapper .button-wrapper button.save {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-.result-wrapper .button-wrapper button.restart {
+.journal .result-wrapper .button-wrapper button.restart {
   border: 1px solid white;
 }
 
-.result-wrapper .button-wrapper button.save:hover {
+.journal .result-wrapper .button-wrapper button.save:hover {
   filter: brightness(0.9);
 }
 
-.result-wrapper .button-wrapper button.restart:hover {
+.journal .result-wrapper .button-wrapper button.restart:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
@@ -310,3 +319,4 @@ button.hidden {
 		transform: translateX(-50%) translatey(0px);
 	}
 }
+

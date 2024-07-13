@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import WaterWave from "react-water-wave";
 import './Home.css'
@@ -7,6 +7,7 @@ import star from '../../assets/ui/star.png'
 import arrow from '../../assets/ui/arrow_cricle.png'
 
 const Home = () => {
+
   return (
     <div className='home'>
       <WaterWave 

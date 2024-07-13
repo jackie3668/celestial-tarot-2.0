@@ -8,10 +8,8 @@ import LoginModal from '../Authentication/LoginModal';
 import RegisterModal from '../Authentication/RegisterModal';
 import star from '../../assets/ui/star.png'
 
-const Navbar = () => {
-    const { userLoggedIn } = useAuth();
-    const [showLogin, setShowLogin] = useState(false);
-    const [showRegister, setShowRegister] = useState(false);
+const Navbar = ({ handleSwitchToLogin, handleSwitchToRegister }) => {
+    const { userLoggedIn, currentUser } = useAuth();
     const [isOpen, setOpen] = useState();
     
     const navigate = useNavigate();
@@ -19,16 +17,7 @@ const Navbar = () => {
     const toggleMenu = () => {
       setOpen(!isOpen);
     };
-  
-    const handleSwitchToRegister = () => {
-        setShowRegister(true);
-        setShowLogin(false);
-    };
 
-    const handleSwitchToLogin = () => {
-        setShowLogin(true);
-        setShowRegister(false);
-    };
 
     const handleLogout = () => {
         doSignOut().then(() => {
@@ -78,8 +67,8 @@ const Navbar = () => {
                 <ul>
                     {userLoggedIn ? (
                         <>
-                            <li onClick={handleLogout}>
-                                Journal
+                            <li>
+                                <Link to='/journal' >Journal</Link>
                             </li>
                             <li onClick={handleLogout}>
                                 Logout
@@ -99,8 +88,7 @@ const Navbar = () => {
                 <p className='mobile'>&copy; Designed and developed by Jackie Shen | All rights reserved</p>
             </div>
 
-            {!userLoggedIn && showLogin && <LoginModal handleSwitchToRegister={handleSwitchToRegister} />}
-            {!userLoggedIn && showRegister && <RegisterModal handleSwitchToLogin={handleSwitchToLogin} />}
+        
         </nav>
     );
 };

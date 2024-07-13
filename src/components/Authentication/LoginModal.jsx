@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { doSignInWithEmailAndPassword } from '../../auth';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes} from '@fortawesome/free-solid-svg-icons'; 
+import './Auth.css'
 
 
-const LoginModal = ({ handleSwitchToRegister }) => {
+const LoginModal = ({ handleSwitchToRegister, handleCloseAuth }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isSigningIn, setIsSigningIn] = useState(false);
@@ -18,6 +21,7 @@ const LoginModal = ({ handleSwitchToRegister }) => {
                 setPassword('');
                 setErrorMessage('');
                 setIsSigningIn(false);
+                handleCloseAuth()
             } catch (error) {
                 if (error.code === 'auth/invalid-credential') {
                     setErrorMessage('The account does not exist or the email or password entered is incorrect.');
@@ -30,10 +34,14 @@ const LoginModal = ({ handleSwitchToRegister }) => {
     };
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
+        <div className='auth-modal login'>
+            <form onSubmit={handleSubmit}>          
+                <div className="close" onClick={handleCloseAuth} >
+                    <FontAwesomeIcon icon={faTimes} />
+                    Close
+                </div>
                 <div>
-                    <label>Email</label>
+                    <label>Email :</label>
                     <input
                         type="email"
                         autoComplete='email'
@@ -43,7 +51,7 @@ const LoginModal = ({ handleSwitchToRegister }) => {
                     />
                 </div>
                 <div>
-                    <label>Password</label>
+                    <label>Password :</label>
                     <input
                         type="password"
                         autoComplete='current-password'
@@ -60,8 +68,9 @@ const LoginModal = ({ handleSwitchToRegister }) => {
                 <button type='submit' disabled={isSigningIn}>
                     {isSigningIn ? 'Signing In...' : 'Sign In'}
                 </button>
+                <p className='switch'>Don't have an account? <button onClick={handleSwitchToRegister}>Register</button></p>
             </form>
-            <p>Don't have an account? <button onClick={handleSwitchToRegister}>Register</button></p>
+            
         </div>
     );
 };

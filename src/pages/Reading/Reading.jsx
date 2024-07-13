@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../authContext';
 import { db } from '../../firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, doc, serverTimestamp } from 'firebase/firestore';
 import WaterWave from "react-water-wave";
 import axios from 'axios';
 import './Reading.css'
 import background from '../../assets/images/reading.png'
 import spreadData from '../../data/spreadData';
-import { doSendEmailVerification } from '../../auth';
 import LoginModal from '../../components/Authentication/LoginModal';
 import RegisterModal from '../../components/Authentication/RegisterModal';
 import QuestionInput from '../../components/QuestionInput/QuestionInput';
@@ -22,22 +21,21 @@ import arrow from '../../assets/ui/arrow_cricle.png'
 import Shuffle from '../../components/Shuffle/Shuffle';
 import Result from '../../components/Result/Result';
 
-const Reading = () => {
+const Reading = ({ handleSwitchToRegister, handleSwitchToLogin }) => {
     const { userLoggedIn, currentUser } = useAuth();
     const [question, setQuestion] = useState('');
     const [design, setDesign] = useState(0);
     const [spread, setSpread] = useState(0);
     const [selectedCards, setSelectedCards] = useState([]);
     const [cards, setCards] = useState([]);
-    const [tagsInput, setTagsInput] = useState('');
     const [tags, setTags] = useState([]);
     const [result, setResult] = useState('')
-    const [isLoading, setIsLoading] = useState(true); 
-    const [noteInput, setNoteInput] = useState('');
+    const [save, setSave] = useState(true); 
     const [note, setNote] = useState('');
+    const [images, setImages] = useState([])
+    const [isLoading, setIsLoading] = useState(true); 
     const [showLogin, setShowLogin] = useState(false);
     const [showRegister, setShowRegister] = useState(false); 
-    const [editingNote, setEditingNote] = useState(false);
     const [isEmailVerified, setIsEmailVerified] = useState(false);
 
     const readingProps = {
@@ -48,13 +46,21 @@ const Reading = () => {
         cards,
         result,
         isLoading,
+        tags,
+        note,
+        images,
+        save,
         setQuestion,
         setDesign,
         setSpread,
         setSelectedCards,
         setCards,
         setResult,
-        setIsLoading
+        setIsLoading,
+        setTags,
+        setNote,
+        setImages,
+        setSave
     };
 
     useEffect(() => {
@@ -89,46 +95,30 @@ const Reading = () => {
         document.querySelector('.reading-container').classList.add('hide')
     };
 
-
-    const handleKeyDown = (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            setTags([...tags, tagsInput.trim()]);
-            setTagsInput('');
-        }
-    };
-
     const handleSaveReading = async () => {
         try {
             if (!currentUser) {
                 console.error('User not authenticated.');
+                setShowLogin(true)
                 return;
             }
-
-            const docRef = await addDoc(collection(db, "readings"), {
-                uid: currentUser.uid,
+            const celestialRef = doc(db, 'celestial', currentUser.uid);
+            console.log(celestialRef);
+            const readingsRef = collection(celestialRef, 'readings');
+            await addDoc(readingsRef, {
                 question,
                 design,
                 spread,
                 selectedCards,
-                result: 'Your result here',
+                cards,
+                images,
+                result,
                 tags,
                 note,
                 createdAt: serverTimestamp()
             });
 
-            console.log('Reading added with ID: ', docRef.id);
-
-            setQuestion('');
-            setDesign('');
-            setSpread('');
-            setSelectedCards([]);
-            setCards([])
-            setResult('')
-            setTags([]);
-            setTagsInput('');
-            setNote('');
-            setNoteInput('');
+            setSave(false)
         } catch (error) {
             console.error('Error saving reading to Firestore: ', error);
         }
@@ -145,7 +135,7 @@ const Reading = () => {
         const cardStates = cards.map(card => `${card.name} ${card.reversal}`).join(', ');
 
     
-        const prompt = `My question is: ${question}. I drew ${cards.length} cards. They are: ${cardStates}. Return 35 words per card, formatted like 'Card Name (Reversal Status)', separated by line break, start with the card name at the beginning. Take upright/reverse into account. Lastly, give one paragraph summary start with 'Summary:'. (35 words).`;
+        const prompt = `My question is: ${question}. I drew ${cards.length} cards. They are: ${cardStates}. Return 35 words per card, formatted like 'Card Name (Reversal Status) + ':'', separated by line break, start with the card name at the beginning. Take upright/reverse into account. Lastly, give one paragraph summary start with 'Summary:'. (35 words).`;
     
         console.log("Prompt:", prompt);
     
@@ -157,48 +147,10 @@ const Reading = () => {
     
         console.log("Axios Response:", response);
         setResult(response.data.generatedResponse);
-        setIsLoading(false)
         } catch (error) {
         console.error('Error fetching data:', error);
         }
     };
-    // const handleSwitchToRegister = () => {
-    //     setShowRegister(true); 
-    //     setShowLogin(false);
-    // };
-
-    // const handleSwitchToLogin = () => {
-    //     setShowLogin(true);
-    //     setShowRegister(false);
-    // };
-
-    // const handleAddNote = () => {
-    //     if (noteInput.trim() !== '') {
-    //         setNote(noteInput.trim());
-    //         setNoteInput('');
-    //     }
-    // };
-
-    // const handleEditNote = () => {
-    //     setEditingNote(true);
-    //     setNoteInput(note);
-    // };
-
-    // const handleSaveEditedNote = () => {
-    //     setNote(noteInput.trim());
-    //     setEditingNote(false);
-    // };
-
-    // const handleCancelEditNote = () => {
-    //     setEditingNote(false);
-    //     setNoteInput('');
-    // };
-
-    // const handleRemoveTag = (index) => {
-    //     const updatedTags = [...tags];
-    //     updatedTags.splice(index, 1);
-    //     setTags(updatedTags);
-    // };
 
     return (
         <div className='reading'>
@@ -245,7 +197,7 @@ const Reading = () => {
             </div>
             <div className="shuffle-container hide">
                 <Shuffle {...readingProps}/>
-                {selectedCards.length === spreadData[spread].length ? (
+                {selectedCards && spreadData[spread] && selectedCards.length === spreadData[spread].length ? (
                 // If the number of selected cards matches the spread length
                 cards.length === spreadData[spread].length ? (
                     // If the number of flipped cards matches the spread length
@@ -268,8 +220,11 @@ const Reading = () => {
                 )}
             </div>
             <div className="results-container hide">
-                <Result {...readingProps}/>
+                <Result {...readingProps}  handleSaveReading={handleSaveReading}/>
             </div>
+            {!userLoggedIn && showLogin && <LoginModal handleSwitchToRegister={handleSwitchToRegister} />}
+            {!userLoggedIn && showRegister && <RegisterModal handleSwitchToLogin={handleSwitchToLogin} />} 
+            {/* {userLoggedIn && !isEmailVerified && <p>Verify your email before you continue. A link has been sent</p>} */}
             {/* {userLoggedIn && isEmailVerified && <p className='result'>Logged in content here...</p>}
             {!userLoggedIn && showLogin && <LoginModal handleSwitchToRegister={handleSwitchToRegister} />}
             {!userLoggedIn && showRegister && <RegisterModal handleSwitchToLogin={handleSwitchToLogin} />} 

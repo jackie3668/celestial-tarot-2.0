@@ -5,7 +5,7 @@ import design1Image from '../../assets/designs/design1/0.jpg';
 import spreadData from '../../data/spreadData';
 import tarotCards from '../../data/tarotCard';
 
-const Shuffle = ({ cards, setCards, spread, design, selectedCards, setSelectedCards }) => {
+const Shuffle = ({ setCards, spread, design, selectedCards, setSelectedCards }) => {
   const designImage = design === 0 ? design0Image : design1Image;
   const [isCircleAnimationComplete, setIsCircleAnimationComplete] = useState(false);
   const [selectedCount, setSelectedCount] = useState(0);
@@ -14,7 +14,7 @@ const Shuffle = ({ cards, setCards, spread, design, selectedCards, setSelectedCa
   useEffect(() => {
     const circleAnimationTimeout = setTimeout(() => {
       setIsCircleAnimationComplete(true);
-    }, 3000); // Adjust the timeout as per your animation duration
+    }, 3000); 
 
     return () => clearTimeout(circleAnimationTimeout);
   }, []);

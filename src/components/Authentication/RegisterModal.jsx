@@ -3,11 +3,12 @@ import axios from 'axios';
 import { useAuth } from '../../authContext';
 import { doCreateUserWithEmailAndPassword, doSignInWithGoogle, doSendEmailVerification } from '../../auth';
 import { db } from '../../firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes} from '@fortawesome/free-solid-svg-icons'
+import './Auth.css'
 
-const RegisterModal = ({ handleSwitchToLogin }) => {
-    const { currentUser } = useAuth();
+const RegisterModal = ({ handleSwitchToLogin, handleCloseAuth }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -41,9 +42,8 @@ const RegisterModal = ({ handleSwitchToLogin }) => {
                 const userCredential = await doCreateUserWithEmailAndPassword(email, password);
                 const { uid, email: userEmail } = userCredential.user;
 
-                await doSendEmailVerification(userCredential.user);
-
-                await addDoc(collection(db, "users"), {
+                const celestialRef = doc(db, 'celestial', uid);
+                await setDoc(celestialRef, {
                     uid: uid,
                     email: userEmail,
                     ipAddress: ipAddress,
@@ -54,7 +54,7 @@ const RegisterModal = ({ handleSwitchToLogin }) => {
                 setPassword('');
                 setConfirmPassword('');
                 setErrorMessage('');
-
+                handleCloseAuth()
             } catch (error) {
                 if (error.code === 'auth/email-already-in-use') {
                     setErrorMessage('Email already in use');
@@ -72,6 +72,7 @@ const RegisterModal = ({ handleSwitchToLogin }) => {
             setIsRegistering(true);
             await doSignInWithGoogle(); 
             setIsRegistering(false);
+            handleCloseAuth()
         } catch (error) {
             setErrorMessage(error.message);
             setIsRegistering(false);
@@ -80,10 +81,14 @@ const RegisterModal = ({ handleSwitchToLogin }) => {
 
     return (
         <>
-            <main>
+            <main className='auth-modal register'>
                 <form onSubmit={onSubmit}>
+                    <div className="close" onClick={handleCloseAuth} >
+                        <FontAwesomeIcon icon={faTimes} />
+                        Close
+                    </div>
                     <div>
-                        <label>Email</label>
+                        <label>Email :</label>
                         <input
                             disabled={isRegistering}
                             type="email"
@@ -95,7 +100,7 @@ const RegisterModal = ({ handleSwitchToLogin }) => {
                     </div>
 
                     <div>
-                        <label>Password</label>
+                        <label>Password :</label>
                         <input
                             disabled={isRegistering}
                             type="password"
@@ -107,7 +112,7 @@ const RegisterModal = ({ handleSwitchToLogin }) => {
                     </div>
 
                     <div>
-                        <label>Confirm Password</label>
+                        <label>Confirm Password :</label>
                         <input
                             disabled={isRegistering}
                             type="password"
@@ -128,25 +133,17 @@ const RegisterModal = ({ handleSwitchToLogin }) => {
                     >
                         {isRegistering && !isEmailVerified ? 'Signing Up...' : 'Sign Up'}
                     </button>
-
-                    {/* Verification message */}
-                    {currentUser && !isEmailVerified ? (
-                        <p>Check your email for the verification link.</p>
-                    ) : (
-                        <p>Your email is verified. You can close this window now.</p>
-                    )}
-
+                    <div>
+                        <button onClick={handleSignInWithGoogle} disabled={isRegistering}>
+                            {isRegistering ? 'Signing In with Google...' : 'Or Sign In with Google'}
+                        </button>
+                    </div>
+                    <p  className='switch'>
+                        Already have an account? {'   '}
+                        <button onClick={handleSwitchToLogin}>Sign In</button>
+                    </p>
                 </form>
-                <div>
-                    <p>Or sign up with</p>
-                    <button onClick={handleSignInWithGoogle} disabled={isRegistering}>
-                        {isRegistering ? 'Signing In with Google...' : 'Sign Up with Google'}
-                    </button>
-                </div>
-                <div>
-                    Already have an account? {'   '}
-                    <button onClick={handleSwitchToLogin}>Sign In</button>
-                </div>
+          
             </main>
         </>
     );
