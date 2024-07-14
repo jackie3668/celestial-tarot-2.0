@@ -7,6 +7,94 @@
   align-items: center;
 }
 
+.journal .journal-container {
+  margin-top: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 2vh;
+}
+
+.journal .summary-header {
+  z-index: 3;
+  height: 3vh;
+}
+
+.journal .icon-wrapper {
+  display: flex;
+  position: relative;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.journal .dropdown-wrapper {
+  top: 105%;
+  left: 0;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(50px);
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 15% 25%;
+  border-radius: 10px;
+  z-index: 999;
+  font-size: 0.875rem;
+}
+
+.journal .dropdown-wrapper input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  margin-right: 5px;
+  position: relative;
+  cursor: pointer;
+}
+
+/* Custom checkbox style */
+.journal .dropdown-wrapper input[type="checkbox"]::before {
+  content: '';
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 1px solid #ccc; /* Border color */
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0.2); /* Unchecked background color */
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+/* Checked state style */
+.journal .dropdown-wrapper input[type="checkbox"]:checked::before {
+  background-color: white; /* Checked background color */
+}
+
+/* Optional: Indicate focus state */
+.journal .dropdown-wrapper input[type="checkbox"]:focus-visible::before {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5); /* Example focus outline color */
+}
+
+.journal .dropdown-wrapper .clear {
+  white-space: nowrap;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.journal .summary-view .content-wrapper {
+  overflow-y: auto;
+  scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6vh;
+}
+
 .detail-view {
   position: relative;
 }
@@ -35,9 +123,9 @@
 }
 
 .spread-display {
-  flex-wrap: wrap; /* Ensure cards wrap to the next line if they exceed the width */
-  justify-content: center; /* Center items horizontally */
-  align-items: flex-start; /* Align items at the top */
+  flex-wrap: wrap; 
+  justify-content: center; 
+  align-items: flex-start; 
   position: relative;
   top: 0%;
   left: calc(50% - 1.5vw);
@@ -68,6 +156,81 @@
   gap: 6vh;
 }
 
+.journal .summary-item {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 5%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+}
+
+.journal .summary-item .reading-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3) ;
+  gap: 3vw;
+  padding-bottom: 1vh;
+}
+
+.journal .summary-item .reading-header>p {
+  font-family: "Cormorant Garamond", serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  white-space: wrap;
+  font-size: 1.25rem;
+}
+
+.journal .summary-item .reading-header>p img {
+  width: 1.5rem;
+  height: max-content;
+}
+
+.journal .summary-item .info {
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.875rem;
+  gap: 5px;
+}
+
+.journal .summary-item .info img {
+  width: 1rem;
+  height: max-content;
+}
+
+.journal .summary-item .info p {
+  font-family: "Cormorant Garamond", serif;
+}
+
+.journal .summary-item .info p:nth-child(3) {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+}
+
+.journal .summary-item .reading-content {
+  font-size: 0.875rem;
+}
+
+.journal .summary-item .reading-details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.journal .summary-item .expand-details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
 .journal select {
   background-color: transparent;
 }
@@ -76,25 +239,40 @@
   gap: 2vh;
 }
 
-.summary-view .summary-header {
+.summary-header {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  width: 100%;
+  justify-content: flex-end;
 }
 
-.summary-view .summary-header h2 {
-  text-align: center;
-}
-
-.summary-view .summary-header .icon-wrapper {
-  align-self: flex-end;
+.summary-header .icon-wrapper {
   display: flex;
+  align-items: center;
   gap: 0.5vw;
+  position: relative;
 }
 
-.summary-view .summary-header .icon-wrapper .icon {
-  font-size: 0.875rem;
+.summary-header .icon-wrapper .search-bar {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 1% 3%;
+  border-radius: 10px;
+}
+
+.summary-header .icon-wrapper .search-bar input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.summary-header .icon-wrapper .search-bar input {
+  background-color: transparent;
+  padding: 0 5px;
+  border: none;
+  color: white;
+}
+
+.summary-header .icon-wrapper .icon {
+  font-size: 0.75rem;
 }
 
 .summary-view, 
@@ -106,7 +284,6 @@
   max-width: 900px;
   padding: 8vh 5vw;
   height: 80vh;
-  margin-top: 15vh;
   background-color: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(50px);
   border-radius: 2vw;
@@ -114,8 +291,10 @@
   box-shadow: 1px 1px 15px 3px rgba(0, 0, 0, 0.1);
 }
 
-
-.journal .result-wrapper .content-wrapper {
+.journal .content-wrapper {
+  min-width: 600px;
+  max-width: 900px;
+  width: 100%;
   overflow-y: auto;
   scrollbar-width: none;
   display: flex;
@@ -313,6 +492,28 @@
 .journal .result-wrapper .input-wrapper button {
   font-size: 0.75rem;
   white-space: nowrap;
+}
+
+
+.journal .summary-item .tags ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5vw;
+}
+
+.journal .summary-item .tags ul li:first-child {
+  margin-left: 1vw;
+}
+
+.journal .summary-item .tags ul li {
+  padding: 0 0.5vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5vw;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .journal .result-wrapper .input-wrapper ul {

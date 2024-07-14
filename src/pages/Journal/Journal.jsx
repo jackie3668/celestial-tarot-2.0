@@ -8,7 +8,8 @@ import './Journal.css';
 import icon from '../../assets/images/reading-icon (1).png';
 import star from '../../assets/ui/star.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faTag, faTimes, faArrowLeft, faFilter, faSort, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faPlus, faTag, faTimes, faArrowLeft, faFilter, faSort, faSearch, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
+
 
 const Journal = () => {
   const { currentUser } = useAuth();
@@ -23,9 +24,17 @@ const Journal = () => {
   const [errorMessageNote, setErrorMessageNote] = useState('');
   const [activeReading, setActiveReading] = useState(null);
   const [searchInput, setSearchInput] = useState('');
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [ascending, setAscending] = useState(true);
+  const [showFilter, setShowFilter] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(false);
-  const [selectedTags, setSelectedTags] = useState(['hello', 'career']); 
-  const [sortOption, setSortOption] = useState('date-desc'); // 'date-asc' or 'date-desc'
+  const spreads = [
+    'Three Card',
+    'Five Card',
+    'Yes or No',
+    'Horseshoe',
+    'Relationship'
+  ];
 
   useEffect(() => {
     const fetchReadings = async () => {
@@ -53,6 +62,25 @@ const Journal = () => {
     };
     fetchReadings();
   }, [currentUser]);
+
+
+  const toggleSortOrder = () => {
+    setAscending(!ascending); 
+  };
+
+  const sortReadings = (readings) => {
+    let sortedReadings = [...readings];
+    sortedReadings.sort((a, b) => {
+      return ascending ? a.createdAt.seconds - b.createdAt.seconds : b.createdAt.seconds - a.createdAt.seconds;
+    });
+    return sortedReadings;
+  };
+
+  const handleDeleteTag = (tagToDelete) => {
+    const updatedTags = tags.filter(tag => tag !== tagToDelete);
+    setTags(updatedTags);
+  };
+
 
   const handleAddTag = () => {
     const trimmedTag = newTag.trim();
@@ -97,7 +125,6 @@ const Journal = () => {
       }
     }
   };
-  
 
   const handleReadingClick = (index) => {
     setActiveReading(index);
@@ -124,7 +151,6 @@ const Journal = () => {
     setSelectedTags([]); // Clear selectedTags
     setReadings(allReadings); // Show all readings
   };
-  
 
   const filterReadings = (selectedTags) => {
     if (!selectedTags || selectedTags.length === 0) {
@@ -137,19 +163,6 @@ const Journal = () => {
       );
       setReadings(filteredReadings);
     }
-  };
-  
-
-  const handleSortChange = (option) => {
-    setSortOption(option);
-    // Implement sorting logic based on option ('date-asc' or 'date-desc')
-    let sortedReadings = [...readings];
-    if (option === 'date-asc') {
-      sortedReadings.sort((a, b) => new Date(a.createdAt.seconds * 1000) - new Date(b.createdAt.seconds * 1000));
-    } else if (option === 'date-desc') {
-      sortedReadings.sort((a, b) => new Date(b.createdAt.seconds * 1000) - new Date(a.createdAt.seconds * 1000));
-    }
-    setReadings(sortedReadings);
   };
 
   const handleSearch = () => {
@@ -165,21 +178,16 @@ const Journal = () => {
     setReadings(filteredReadings);
   };
 
-
   const formatDate = (timestamp) => {
     if (!timestamp || !timestamp.seconds) {
       return ''; // Handle the case where timestamp is not defined or missing required properties
     }
-  
+
     const date = new Date(timestamp.seconds * 1000);
     return date.toLocaleString('en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      hour12: true,
     });
   };
 
@@ -199,66 +207,101 @@ const Journal = () => {
       </WaterWave>
       <div className="journal-container">
         {activeReading === null ? (
-          <div className="summary-view">
+          <>
             <div className="summary-header">
-              <h2>Past Readings</h2>
               <div className="icon-wrapper">
-                <FontAwesomeIcon icon={faFilter} className="icon" />
-                <div className="dropdown-wrapper">
-                  {tags.map((tag, index) => (
-                    <label key={index}>
-                      <input
-                        type="checkbox"
-                        value={tag}
-                        checked={selectedTags.includes(tag)}
-                        onChange={() => handleTagChange(tag)}
-                      />
-                      {tag}
+                <FontAwesomeIcon
+                  icon={faFilter}
+                  className="icon"
+                  onClick={() => {
+                    setShowFilter(!showFilter);
+                    setShowSearchBar(false)
+                  }}
+                />
+                {showFilter && (
+                  <div className="dropdown-wrapper">
+                    <label onClick={handleClearFilter} className='clear'>                 
+                      <FontAwesomeIcon icon={faTimes} /> 
+                      Clear filter
                     </label>
-                  ))}
-                  {selectedTags.length > 0 && (
-                    <button className="clear-filter" onClick={handleClearFilter}>
-                      <FontAwesomeIcon icon={faTimes} /> Clear Filter
-                    </button>
+                    {tags.map((tag, index) => (
+                      <label key={index}>
+                        <input
+                          type="checkbox"
+                          value={tag}
+                          checked={selectedTags.includes(tag)}
+                          onChange={() => handleTagChange(tag)}
+                        />
+                        {tag}
+                      </label>
+                    ))}
+                  </div>
+                )}
+                <div className="sort-toggle" onClick={toggleSortOrder}>
+                  {ascending ? (
+                    <FontAwesomeIcon icon={faSortUp} className="icon" />
+                  ) : (
+                    <FontAwesomeIcon icon={faSortDown} className="icon" />
                   )}
                 </div>
-                <FontAwesomeIcon icon={faSort} className="icon" />
-                <select
-                  value={sortOption}
-                  onChange={(e) => handleSortChange(e.target.value)}
-                >
-                  <option value="date-asc">Sort by Date (Ascending)</option>
-                  <option value="date-desc">Sort by Date (Descending)</option>
-                </select>
-                <FontAwesomeIcon icon={faSearch} className="icon" onClick={() => setShowSearchBar(!showSearchBar)} />
-              </div>
-              {showSearchBar && (
-                <div className="search-bar">
-                  <input
-                    type="text"
-                    value={searchInput}
-                    onChange={(e) => setSearchInput(e.target.value)}
-                    onKeyDown={handleSearchKeyPress}
-                    placeholder="Search results..."
+                <FontAwesomeIcon icon={faSearch} className="icon" onClick={() => {
+                    setShowSearchBar(!showSearchBar);
+                    setShowFilter(false);
+                  }}
                   />
-                  <button onClick={handleSearch}>Search</button>
-                </div>
-              )}
-            </div>
-            {readings.length > 0 ? (
-              readings.map((reading, index) => (
-                <div key={index} className='summary-item' onClick={() => handleReadingClick(index)}>
-                  <h1>{reading.question}</h1>
-                  <div className="reading-details">
-                    <p>Tags: {reading.tags.join(', ')}</p>
-                    <p>Date: {formatDate(reading.createdAt)}</p>
+                {showSearchBar && (
+                  <div className="search-bar">
+                    <input
+                      type="text"
+                      value={searchInput}
+                      onChange={(e) => setSearchInput(e.target.value)}
+                      onKeyDown={handleSearchKeyPress}
+                      placeholder="Search "
+                    />
+                    <button onClick={handleSearch}>Search</button>
                   </div>
-                </div>
-              ))
-            ) : (
-              <p>No readings found.</p>
-            )}
-          </div>
+                )}
+              </div>
+            </div>
+            <div className="summary-view">
+              <div className="content-wrapper">
+                {sortReadings(readings).length > 0 ? (
+                  sortReadings(readings).map((reading, index) => (
+                    <div key={index} className='summary-item'>
+                      <div className="reading-header">
+                        <p><img src={icon} alt="" />{reading.question}</p>
+                        <div className="info">
+                          <p>{formatDate(reading.createdAt)}</p>
+                          <img src={star} alt="" />
+                          <p>{spreads[reading.spread]}</p>
+                        </div>
+                      </div>
+                      <div className="reading-content">
+                        {reading.result.length > 200 ? `${reading.result.slice(0, 200)}...` : reading.result}
+                      </div>
+                      <div className="reading-details">
+                        <div className="expand-details" onClick={() => handleReadingClick(index)}>
+                          <span className="expand-text">View More</span>
+                          <FontAwesomeIcon icon={faChevronDown} className="expand-icon" />
+                        </div>
+                        <div className="tags">
+                          {reading.tags &&
+                          <ul>
+                          {reading.tags && reading.tags.map((tag, index) => (
+                            <li key={index}><FontAwesomeIcon icon={faTag} />{tag} <FontAwesomeIcon onClick={() => handleDeleteTag(tag)} icon={faTimes} /></li>
+                          ))}
+                          </ul>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p>No readings found.</p>
+                )}
+              </div>
+            </div>
+          </>
         ) : (
           <div className="detail-view">
             <FontAwesomeIcon icon={faArrowLeft} className="return-icon" onClick={handleBackToSummary} />
@@ -273,26 +316,6 @@ const Journal = () => {
                 <div key={index} className='result-wrapper'>
                   <div className="content-wrapper">
                     <h1><img src={icon} alt="" />{question}</h1>
-                    <h3>Your Spread</h3>
-                    <div className="spread-display">
-      
-                      {activeReading !== null && readings[activeReading].selectedCards.map((card, index) => (
-                        <div
-                          key={index}
-                          className="spread-card-container"
-                          style={{
-                            position: 'absolute',
-                            left: `calc(${card.x} / 2)`, 
-                            top: `calc(${card.y} - 50%)`, 
-                            transform: 'translateY(-50%)' 
-                          }}
-                          >
-                          <div className="card-image">
-                            <img src={images[index]} className='card-image' alt="" />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
                     {allExceptLast.map((item, index) => {
                       const [cardName, interpretation] = item.split(':');
                       return (
@@ -318,42 +341,32 @@ const Journal = () => {
                         <div className="save-wrapper">
                           <span>Add tags and note to your reading, and save to your journal.</span>
                           <div className="editor">
-                            <div className="tags">
-                              <div className='header' onClick={() => setShowTagInput(!showTagInput)}>
-                                <FontAwesomeIcon icon={faPlus} /><p>Add Tags</p><span>Separate by comma</span>
+                   
+                          <div className="tags">
+                            <div className='header' onClick={() => setShowTagInput(!showTagInput)} ><FontAwesomeIcon icon={faPlus} /><p>Add Tags</p><span>Separate by comma</span></div>
+                        
+                            {showTagInput && (
+                              <div className='input-wrapper'>
+                                {tags &&
+                                <ul>
+                                {tags && tags.map((tag, index) => (
+                                  <li key={index}><FontAwesomeIcon icon={faTag} />{tag} <FontAwesomeIcon onClick={() => handleDeleteTag(tag)} icon={faTimes} /></li>
+                                ))}
+                                </ul>
+                                }
+                                <input
+                                  type="text"
+                                  value={newTag}
+                                  onChange={(e) => setNewTag(e.target.value)}
+                                  onKeyDown={handleKeyPress}
+                                  placeholder="Add tags here"
+                                />
+                                <button onClick={handleAddTag}>Add Tag</button>
                               </div>
-                              {showTagInput && (
-                                <div className='input-wrapper'>
-                                  {tags && (
-                                    <ul>
-                                      {tags.map((tag, index) => (
-                                        <li key={index}>
-                                          <label>
-                                            <input
-                                              type="checkbox"
-                                              value={tag}
-                                              checked={selectedTags.includes(tag)}
-                                              onChange={() => handleTagChange(tag)}
-                                            />
-                                            {tag}
-                                          </label>
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  )}
-                                  <input
-                                    type="text"
-                                    value={newTag}
-                                    onChange={(e) => setNewTag(e.target.value)}
-                                    onKeyDown={handleKeyPress}
-                                    placeholder="Add tags here"
-                                  />
-                                  <button onClick={handleAddTag}>Add Tag</button>
-                                </div>
-                              )}
+                            )}
+                            <span className="tip fade-out">{errorMessageTag}</span>
+                          </div>
 
-                              <span className="tip fade-out">{errorMessageTag}</span>
-                            </div>
                             <div className="note">
                               <div className='header' onClick={() => setShowNoteInput(!showNoteInput)}>
                                 <FontAwesomeIcon icon={faPlus} /><p>Add Note</p><span>You can edit this later in your journal</span>

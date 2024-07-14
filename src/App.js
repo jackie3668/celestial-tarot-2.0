@@ -47,11 +47,15 @@ const handleCloseAuth = () => {
             'input[type="number"]',
             'input[type="submit"]',
             'input[type="image"]',
+            'input[type="checkbox"]',
             'label[for]',
             'select',
             'textarea',
             'button',
             '.link',
+            'label',
+            '.clear',
+            '.expand-details',
             {
               target: '.about-section',
               options: {
