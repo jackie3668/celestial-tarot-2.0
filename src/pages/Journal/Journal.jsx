@@ -1,25 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import WaterWave from 'react-water-wave';
-import background from '../../assets/images/reading.png';
+import background from '../../assets/images/pexels-mo-eid-1268975-8832898.jpg';
 import { db } from '../../firebase';
-import { collection, query, getDocs } from 'firebase/firestore';
+import { collection, query, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { useAuth } from '../../authContext';
 import './Journal.css';
 import icon from '../../assets/images/reading-icon (1).png';
 import star from '../../assets/ui/star.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faPlus, faTag, faTimes, faArrowLeft, faFilter, faSort, faSearch, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
-
+import {
+  faChevronDown,
+  faPlus,
+  faTag,
+  faTimes,
+  faArrowLeft,
+  faFilter,
+  faSearch,
+  faSortDown,
+  faSortUp,
+} from '@fortawesome/free-solid-svg-icons';
 
 const Journal = () => {
   const { currentUser } = useAuth();
   const [readings, setReadings] = useState([]);
   const [allReadings, setAllReadings] = useState([]);
-  const [showTagInput, setShowTagInput] = useState(false);
+  const [showTagInput, setShowTagInput] = useState(true);
   const [newTag, setNewTag] = useState('');
   const [tags, setTags] = useState([]);
+  const [readingTags, setReadingTags] = useState([]);
   const [note, setNote] = useState('');
-  const [showNoteInput, setShowNoteInput] = useState(false);
+  const [showNoteInput, setShowNoteInput] = useState(true);
   const [errorMessageTag, setErrorMessageTag] = useState('');
   const [errorMessageNote, setErrorMessageNote] = useState('');
   const [activeReading, setActiveReading] = useState(null);
@@ -28,13 +38,13 @@ const Journal = () => {
   const [ascending, setAscending] = useState(true);
   const [showFilter, setShowFilter] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(false);
-  const spreads = [
+  const [spreads] = useState([
     'Three Card',
     'Five Card',
     'Yes or No',
     'Horseshoe',
     'Relationship'
-  ];
+  ]);
 
   useEffect(() => {
     const fetchReadings = async () => {
@@ -83,32 +93,58 @@ const Journal = () => {
 
 
   const handleAddTag = () => {
-    const trimmedTag = newTag.trim();
-    if (trimmedTag === '') {
-      setErrorMessageTag('Tag cannot be empty.');
-      setTimeout(() => setErrorMessageTag(''), 2000);
+    if (newTag.trim() === '') {
+      setErrorMessageTag('Please enter a tag.');
+      document.querySelector('.save-wrapper .tip').classList.remove('fade-out');
+      document.querySelector('.save-wrapper .tip').classList.add('fade-in-fwd');
+      setTimeout(() => {
+        document.querySelector('.save-wrapper .tip').classList.add('fade-out');
+      }, 1500);
       return;
     }
-    if (tags.includes(trimmedTag)) {
+  
+    if (readingTags.includes(newTag.trim())) {
       setErrorMessageTag('Tag already exists.');
-      setTimeout(() => setErrorMessageTag(''), 2000);
+      document.querySelector('.save-wrapper .tip').classList.remove('fade-out');
+      document.querySelector('.save-wrapper .tip').classList.add('fade-in-fwd');
+      setTimeout(() => {
+        document.querySelector('.save-wrapper .tip').classList.add('fade-out');
+      }, 1500);
       return;
     }
-
-    setTags([...tags, trimmedTag]);
+  
+    const newTags = newTag.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
+    setReadingTags([...readingTags, ...newTags]);
     setNewTag('');
-    setShowTagInput(false);
+    setErrorMessageTag('');
   };
-
+  
+  
   const handleAddNote = () => {
     if (note.trim() === '') {
       setErrorMessageNote('Please enter a note.');
-      setTimeout(() => setErrorMessageNote(''), 2000);
-      return;
-    }
+      document.querySelector('.save-wrapper .tip-2').classList.remove('fade-out')
 
-    setShowNoteInput(false);
+      document.querySelector('.save-wrapper .tip-2').classList.add('fade-in-fwd')
+      setTimeout(() => {
+        document.querySelector('.save-wrapper .tip-2').classList.add('fade-out')
+      }, 1500); 
+      return;
+    } else {
+      console.log(note);
+      setNote(note)
+      setErrorMessageNote('Note saved');
+      document.querySelector('.save-wrapper .tip-2').classList.remove('fade-out')
+
+      document.querySelector('.save-wrapper .tip-2').classList.add('fade-in-fwd')
+      setTimeout(() => {
+        document.querySelector('.save-wrapper .tip-2').classList.add('fade-out')
+      }, 1500); 
+      setShowNoteInput(false)
+      return
+    }
   };
+
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -128,10 +164,13 @@ const Journal = () => {
 
   const handleReadingClick = (index) => {
     setActiveReading(index);
+    // Set the tags of the active reading to readingTags state
+    setReadingTags(readings[index].tags || []);
   };
 
   const handleBackToSummary = () => {
     setActiveReading(null);
+    setReadingTags([]); // Clear readingTags
   };
 
   const handleTagChange = (tag) => {
@@ -307,11 +346,42 @@ const Journal = () => {
             <FontAwesomeIcon icon={faArrowLeft} className="return-icon" onClick={handleBackToSummary} />
             {readings.map((reading, index) => {
               if (index !== activeReading) return null;
-              const { question, result, images } = reading;
+              const { id, question, result, images } = reading;
               const resultArray = result.split('\n\n');
               const allExceptLast = resultArray.slice(0, -1);
               const lastItem = resultArray[resultArray.length - 1];
 
+              const handleSaveReading = async () => {
+                const readingId = readings[activeReading].id;
+
+                try {
+                  // Update tags and note in Firebase Firestore
+                  const readingRef = doc(db, 'celestial', currentUser.uid, 'readings', readingId);
+                  await updateDoc(readingRef, {
+                    tags: readingTags, // Update tags with current readingTags state
+                    note: note, // Update note with current note state
+                  });
+              
+                  // Update the local state with the updated tags and note
+                  const updatedReadings = readings.map(r => {
+                    if (r.id === readingId) {
+                      return {
+                        ...r,
+                        tags: readingTags,
+                        note: note,
+                      };
+                    }
+                    return r;
+                  });
+              
+                  setReadings(updatedReadings);
+                  console.log('Document successfully updated!');
+                } catch (error) {
+                  console.error('Error updating document:', error);
+                  // Handle error appropriately (e.g., show error message to user)
+                }
+              };
+              
               return (
                 <div key={index} className='result-wrapper'>
                   <div className="content-wrapper">
@@ -341,31 +411,30 @@ const Journal = () => {
                         <div className="save-wrapper">
                           <span>Add tags and note to your reading, and save to your journal.</span>
                           <div className="editor">
-                   
-                          <div className="tags">
-                            <div className='header' onClick={() => setShowTagInput(!showTagInput)} ><FontAwesomeIcon icon={faPlus} /><p>Add Tags</p><span>Separate by comma</span></div>
-                        
-                            {showTagInput && (
-                              <div className='input-wrapper'>
-                                {tags &&
-                                <ul>
-                                {tags && tags.map((tag, index) => (
-                                  <li key={index}><FontAwesomeIcon icon={faTag} />{tag} <FontAwesomeIcon onClick={() => handleDeleteTag(tag)} icon={faTimes} /></li>
-                                ))}
-                                </ul>
-                                }
-                                <input
-                                  type="text"
-                                  value={newTag}
-                                  onChange={(e) => setNewTag(e.target.value)}
-                                  onKeyDown={handleKeyPress}
-                                  placeholder="Add tags here"
-                                />
-                                <button onClick={handleAddTag}>Add Tag</button>
-                              </div>
-                            )}
-                            <span className="tip fade-out">{errorMessageTag}</span>
-                          </div>
+                            <div className="tags">
+                              <div className='header' onClick={() => setShowTagInput(!showTagInput)} >
+                                <FontAwesomeIcon icon={faPlus} /><p>Add Tags</p><span>Separate by comma</span></div>
+                              {showTagInput && (
+                                <div className='input-wrapper'>
+                                  {tags &&
+                                  <ul>
+                                  {readingTags && readingTags.map((tag, index) => (
+                                    <li key={index}><FontAwesomeIcon icon={faTag} />{tag} <FontAwesomeIcon onClick={() => handleDeleteTag(tag)} icon={faTimes} /></li>
+                                  ))}
+                                  </ul>
+                                  }
+                                  <input
+                                    type="text"
+                                    value={newTag}
+                                    onChange={(e) => setNewTag(e.target.value)}
+                                    onKeyDown={handleKeyPress}
+                                    placeholder="Add tags here"
+                                  />
+                                  <button onClick={handleAddTag}>Add Tag</button>
+                                </div>
+                              )}
+                              <span className="tip fade-out">{errorMessageTag}</span>
+                            </div>
 
                             <div className="note">
                               <div className='header' onClick={() => setShowNoteInput(!showNoteInput)}>
@@ -379,12 +448,15 @@ const Journal = () => {
                                     placeholder="Add a note here..."
                                     rows={5}
                                   />
-                                  <div className="button-wrapper">
+                                  <div className="note-button-wrapper">
                                     <button onClick={handleAddNote}>Add Note</button>
                                   </div>
                                 </div>
                               )}
                               <span className="tip-2 fade-out">{errorMessageNote}</span>
+                            </div>
+                            <div className="button-wrapper">
+                              <button className="save" onClick={handleSaveReading}>Save</button>
                             </div>
                           </div>
                         </div>

@@ -8,8 +8,8 @@ import star from '../../assets/ui/star.png'
 
 const Result = ({ design, question, cards, isLoading, setIsLoading, result, note, setNote, tags, setTags, images, setImages, handleSaveReading, save }) => {
   const [currentHeadingIndex, setCurrentHeadingIndex] = useState(0);
-  const [showTagInput, setShowTagInput] = useState(false);
-  const [showNoteInput, setShowNoteInput] = useState(false);
+  const [showTagInput, setShowTagInput] = useState(true);
+  const [showNoteInput, setShowNoteInput] = useState(true);
   const [newTag, setNewTag] = useState('');
   const [errorMessageTag, setErrorMessageTag] = useState('');
   const [errorMessageNote, setErrorMessageNote] = useState('');
@@ -226,7 +226,7 @@ const Result = ({ design, question, cards, isLoading, setIsLoading, result, note
                         placeholder={note}
                         rows={5}
                       />
-                      <div className="button-wrapper">
+                      <div className="note-button-wrapper">
                         <button onClick={note ? handleEditNote : handleAddNote}>{note ? 'Save Edits' : 'Add Note'}</button>
                       </div>
                     </div>
