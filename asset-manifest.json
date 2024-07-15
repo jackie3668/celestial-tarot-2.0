@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/celestial-tarot-2.0/static/css/main.c6cfe33c.css",
-    "main.js": "/celestial-tarot-2.0/static/js/main.4b97b2da.js",
+    "main.css": "/celestial-tarot-2.0/static/css/main.8e3b1f40.css",
+    "main.js": "/celestial-tarot-2.0/static/js/main.7ad152ae.js",
     "static/media/64.jpg": "/celestial-tarot-2.0/static/media/64.84f08f16c59f6db5215f.jpg",
     "static/media/32.jpg": "/celestial-tarot-2.0/static/media/32.9abb5df6885e725fc32c.jpg",
     "static/media/71.jpg": "/celestial-tarot-2.0/static/media/71.0464b0e76e99c74ca509.jpg",
@@ -81,6 +81,7 @@
     "static/media/36.jpg": "/celestial-tarot-2.0/static/media/36.822b592ca4a76915564f.jpg",
     "static/media/52.jpg": "/celestial-tarot-2.0/static/media/52.b2a50b07b1da76958005.jpg",
     "static/media/reading.png": "/celestial-tarot-2.0/static/media/reading.fd861e8fd5e3a0ad6d9f.png",
+    "static/media/pexels-mo-eid-1268975-8832898.jpg": "/celestial-tarot-2.0/static/media/pexels-mo-eid-1268975-8832898.017be2e53122a65e20f8.jpg",
     "static/media/star.png": "/celestial-tarot-2.0/static/media/star.4baaef5d524c181ed7e3.png",
     "static/media/14.png": "/celestial-tarot-2.0/static/media/14.3167f2af89bff7da3cfd.png",
     "static/media/11.png": "/celestial-tarot-2.0/static/media/11.93fa94f293ff6bdeab1a.png",
@@ -166,11 +167,11 @@
     "static/media/undefined.png": "/celestial-tarot-2.0/static/media/undefined.5f08147fa0cb2fc66688.png",
     "static/media/loading.gif": "/celestial-tarot-2.0/static/media/loading.f57cb3ab60a875c64a10.gif",
     "index.html": "/celestial-tarot-2.0/index.html",
-    "main.c6cfe33c.css.map": "/celestial-tarot-2.0/static/css/main.c6cfe33c.css.map",
-    "main.4b97b2da.js.map": "/celestial-tarot-2.0/static/js/main.4b97b2da.js.map"
+    "main.8e3b1f40.css.map": "/celestial-tarot-2.0/static/css/main.8e3b1f40.css.map",
+    "main.7ad152ae.js.map": "/celestial-tarot-2.0/static/js/main.7ad152ae.js.map"
   },
   "entrypoints": [
-    "static/css/main.c6cfe33c.css",
-    "static/js/main.4b97b2da.js"
+    "static/css/main.8e3b1f40.css",
+    "static/js/main.7ad152ae.js"
   ]
 }
