@@ -64,3 +64,32 @@
 .reading .shuffle-container .floating {
   opacity: 1;
 }
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .reading .heading img {
+    width: 5vw;
+    height: 5vw;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 601px) {
+  .reading .heading img {
+    width: 4vw;
+    height: 4vw;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .reading .heading img {
+    width: 3vw;
+    height: 3vw;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  /* CSS rules here */
+}

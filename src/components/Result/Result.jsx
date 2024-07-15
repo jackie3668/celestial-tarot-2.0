@@ -116,7 +116,6 @@ const Result = ({ design, question, cards, isLoading, setIsLoading, result, note
       setTimeout(() => {
         document.querySelector('.save-wrapper .tip-2').classList.add('fade-out')
       }, 1500); 
-      setShowNoteInput(false)
       return
     }
   };
@@ -142,7 +141,6 @@ const Result = ({ design, question, cards, isLoading, setIsLoading, result, note
         document.querySelector('.save-wrapper .tip-2').classList.add('fade-out')
       }
       }, 1500); 
-      setShowNoteInput(false)
       return
     }
   };
@@ -174,7 +172,7 @@ const Result = ({ design, question, cards, isLoading, setIsLoading, result, note
                     <img src={images[index]} className='card-image' alt="" />
                   </div>
                   <div className='card-text'>
-                    <h3><img src={star} alt="" /><span>{cardName}</span></h3>
+                    <h3><img src={star} className='spinning' alt="" /><span>{cardName}</span></h3>
                     <p>{interpretation}</p>
                   </div>
                 </div>

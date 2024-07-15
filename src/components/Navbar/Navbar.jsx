@@ -4,8 +4,6 @@ import { useAuth } from '../../authContext';
 import { doSignOut } from '../../auth';
 import { Spin as Hamburger } from 'hamburger-react'
 import './Navbar.css'
-import LoginModal from '../Authentication/LoginModal';
-import RegisterModal from '../Authentication/RegisterModal';
 import star from '../../assets/ui/star.png'
 
 const Navbar = ({ handleSwitchToLogin, handleSwitchToRegister }) => {
@@ -37,6 +35,10 @@ const Navbar = ({ handleSwitchToLogin, handleSwitchToRegister }) => {
         };
     }, []);
 
+    const handleNavHome = () => {
+        navigate('/')
+    }
+
 
     return (
         <nav className='fade-in-fwd'>
@@ -59,7 +61,7 @@ const Navbar = ({ handleSwitchToLogin, handleSwitchToRegister }) => {
                         na
                     </li>
                 </ul>
-                <div className="logo">
+                <div className="logo" onClick={handleNavHome}>
                     <img src={star} alt="" />
                     <h1>Celestial</h1>
                     <img src={star} alt="" />

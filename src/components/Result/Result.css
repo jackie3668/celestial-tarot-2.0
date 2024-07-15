@@ -307,3 +307,131 @@ button.hidden {
 		transform: translateX(-50%) translatey(0px);
 	}
 }
+
+/* Extra small devices (phones, less than 600px) */
+@media only screen and (max-width: 600px) {
+  .result-wrapper {
+    min-width: 250px;
+    max-width: 400px;
+  }
+
+  .result-wrapper .card-text img {
+    width: 4vw;
+  }
+
+  .result-wrapper .card-container .card-image img {
+    width: 13vw;
+  }
+
+  .result-wrapper .card-container {
+    gap: 5vw;
+  }
+  
+  .content-wrapper h1 {
+    font-size: 1.5rem;
+  }
+
+  .content-wrapper h1 img {
+    width: 10vw;
+  }
+
+  .card-container .card-text {
+    font-size: 1rem;
+  }
+  .card-container .card-text h3 span {
+    padding: 0 1vw;
+  }
+  .card-container .card-text img {
+    width: 4vw;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up to 767px) */
+@media only screen and (min-width: 601px) and (max-width: 767px) {
+  .result-wrapper {
+    min-width: 400px;
+    max-width: 500px;
+  }
+
+  .result-wrapper .card-text img {
+    width: 2.5vw;
+  }
+
+  .result-wrapper .card-container .card-image img {
+    width: 12vw;
+  }
+
+  .content-wrapper h1 {
+    font-size: 1.5rem;
+  }
+
+  .content-wrapper h1 img {
+    width: 5vw;
+  }
+  
+  .card-container .card-text img {
+    width: 3vw;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up to 991px) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .result-wrapper {
+    min-width: 600px;
+    max-width: 700px;
+  }
+
+  .result-wrapper .card-container .card-image img {
+    width: 10vw;
+  }
+
+  .content-wrapper h1 img {
+    width: 5vw;
+  }
+
+  .content-wrapper h1 {
+    font-size: 1.75rem;
+  }
+
+  .card-container .card-text img {
+    width: 3vw;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up to 1199px) */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .result-wrapper {
+    min-width: 600px;
+    max-width: 800px;
+    margin-top: 15vh;
+  }
+
+  .result-wrapper .card-container .card-image img {
+    width: 6vw;
+  }
+
+  .content-wrapper h1 {
+    font-size: 1.75rem;
+  }
+
+  .card-container .card-text img {
+    width: 2vw;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .result-wrapper {
+    min-width: 800px;
+    max-width: 1000px;
+    margin-top: 15vh;
+  }
+
+  .result-wrapper .card-container .card-image img {
+    width: 6vw;
+  }
+
+  .content-wrapper h1 {
+    font-size: 1.75rem;
+  }
+}

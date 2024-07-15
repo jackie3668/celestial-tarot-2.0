@@ -85,3 +85,83 @@
   padding: 0.5rem 2rem;
   font-weight: 300;
 }
+
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 601px) {
+  .question .input-container button {
+    padding: 0.5rem 1rem;
+    margin-right: 1rem;
+  }
+
+  .question .input-container {
+    width: 60vw;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  /* CSS rules here */
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  /* CSS rules here */
+}
+
+
+/* Extra small devices (phones, less than 600px) */
+@media only screen and (max-width: 600px) {
+  .question .input-container {
+    font-size: 1rem;
+  }
+
+  .question .input-container {
+    width: 90vw;
+  }
+
+  .question .input-container input {
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  
+  .question .input-container input::placeholder {
+    font-size: 1.1rem;
+  }
+  
+  .question .input-container button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    margin-right: 0.75rem;
+  }
+  
+  .question .input-container button img {
+    width: 1rem;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up to 767px) */
+@media only screen and (min-width: 601px) and (max-width: 767px) {
+  .question .input-container {
+    font-size: 1rem;
+    width: 90vw;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up to 991px) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+
+}
+
+/* Large devices (laptops/desktops, 992px and up to 1199px) */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
+}

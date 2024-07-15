@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './Shuffle.css'; // Import your CSS file for styling
+import './Shuffle.css';
 import design0Image from '../../assets/designs/design0/0.png';
 import design1Image from '../../assets/designs/design1/0.jpg';
 import spreadData from '../../data/spreadData';
 import tarotCards from '../../data/tarotCard';
 
-const Shuffle = ({ setCards, spread, design, selectedCards, setSelectedCards }) => {
+const Shuffle = ({ cards, setCards, spread, design, selectedCards, setSelectedCards }) => {
   const designImage = design === 0 ? design0Image : design1Image;
   const [isCircleAnimationComplete, setIsCircleAnimationComplete] = useState(false);
   const [selectedCount, setSelectedCount] = useState(0);
@@ -38,10 +38,21 @@ const Shuffle = ({ setCards, spread, design, selectedCards, setSelectedCards }) 
   const handleFlip = (index) => {
     const listItems = document.querySelectorAll('li.card-list__item');
     const target = listItems[index];
-
+  
+    // Helper function to check if the card already exists
+    const cardExists = (number) => {
+      return cards.some(card => card.img === number);
+    };
+  
     if (target) {
       if (target.classList.contains('click')) {
-        const randomNumber = Math.floor(Math.random() * 78) + 1;
+        let randomNumber = Math.floor(Math.random() * 78) + 1;
+  
+        // Ensure the random number doesn't already exist
+        while (cardExists(randomNumber)) {
+          randomNumber = Math.floor(Math.random() * 78) + 1;
+        }
+  
         const reversal = Math.floor(Math.random() * 2);
         const newCard = {
           id: 1,
@@ -49,17 +60,20 @@ const Shuffle = ({ setCards, spread, design, selectedCards, setSelectedCards }) 
           name: tarotCards[randomNumber],
           reversal: reversal === 1 ? 'reversed' : ''
         };
-
+  
         setCards(prevCards => [...prevCards, newCard]);
-
+  
         target.querySelector('img').classList.add('flip-in-ver-right');
-        const newImagePath = design === 0 ? require(`../../assets/designs/design${design}/${randomNumber}.png`) : require(`../../assets/designs/design${design}/${randomNumber}.jpg`);
-        target.querySelector('img').src = newImagePath
+        const newImagePath = design === 0 
+          ? require(`../../assets/designs/design${design}/${randomNumber}.png`) 
+          : require(`../../assets/designs/design${design}/${randomNumber}.jpg`);
+        target.querySelector('img').src = newImagePath;
         target.querySelector('img').classList.add('reversed');
-        target.classList.remove('click')
+        target.classList.remove('click');
       }
     }
   };
+  
 
   return (
     <div className='card-wrapper'>

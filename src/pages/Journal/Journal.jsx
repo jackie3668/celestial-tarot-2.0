@@ -87,8 +87,8 @@ const Journal = () => {
   };
 
   const handleDeleteTag = (tagToDelete) => {
-    const updatedTags = tags.filter(tag => tag !== tagToDelete);
-    setTags(updatedTags);
+    const updatedTags = readingTags.filter(tag => tag !== tagToDelete);
+    setReadingTags(updatedTags);
   };
 
 
@@ -140,7 +140,7 @@ const Journal = () => {
       setTimeout(() => {
         document.querySelector('.save-wrapper .tip-2').classList.add('fade-out')
       }, 1500); 
-      setShowNoteInput(false)
+      setShowNoteInput(true)
       return
     }
   };
@@ -164,22 +164,19 @@ const Journal = () => {
 
   const handleReadingClick = (index) => {
     setActiveReading(index);
-    // Set the tags of the active reading to readingTags state
     setReadingTags(readings[index].tags || []);
   };
 
   const handleBackToSummary = () => {
     setActiveReading(null);
-    setReadingTags([]); // Clear readingTags
+    setReadingTags([]); 
   };
 
   const handleTagChange = (tag) => {
     const updatedSelectedTags = [...selectedTags];
     if (updatedSelectedTags.includes(tag)) {
-      // If tag is already selected, remove it
       updatedSelectedTags.splice(updatedSelectedTags.indexOf(tag), 1);
     } else {
-      // Otherwise, add the tag
       updatedSelectedTags.push(tag);
     }
     setSelectedTags(updatedSelectedTags);
@@ -187,16 +184,14 @@ const Journal = () => {
   };
 
   const handleClearFilter = () => {
-    setSelectedTags([]); // Clear selectedTags
-    setReadings(allReadings); // Show all readings
+    setSelectedTags([]); 
+    setReadings(allReadings); 
   };
 
   const filterReadings = (selectedTags) => {
     if (!selectedTags || selectedTags.length === 0) {
-      // If no tags are selected, show all readings
       setReadings(allReadings);
     } else {
-      // Filter readings based on the selected tags
       const filteredReadings = allReadings.filter(reading =>
         selectedTags.some(tag => reading.tags.includes(tag))
       );
@@ -207,7 +202,6 @@ const Journal = () => {
   const handleSearch = () => {
     const filteredReadings = allReadings.filter(reading => {
       const searchText = searchInput.toLowerCase();
-      // Check if the search input matches the reading's question, tags, or notes
       return (
         reading.question.toLowerCase().includes(searchText) ||
         reading.note.toLowerCase().includes(searchText) ||
@@ -219,7 +213,7 @@ const Journal = () => {
 
   const formatDate = (timestamp) => {
     if (!timestamp || !timestamp.seconds) {
-      return ''; // Handle the case where timestamp is not defined or missing required properties
+      return ''; 
     }
 
     const date = new Date(timestamp.seconds * 1000);
@@ -311,7 +305,7 @@ const Journal = () => {
                         <p><img src={icon} alt="" />{reading.question}</p>
                         <div className="info">
                           <p>{formatDate(reading.createdAt)}</p>
-                          <img src={star} alt="" />
+                          <img src={star}  className='spinning' alt="" />
                           <p>{spreads[reading.spread]}</p>
                         </div>
                       </div>
@@ -327,7 +321,7 @@ const Journal = () => {
                           {reading.tags &&
                           <ul>
                           {reading.tags && reading.tags.map((tag, index) => (
-                            <li key={index}><FontAwesomeIcon icon={faTag} />{tag} <FontAwesomeIcon onClick={() => handleDeleteTag(tag)} icon={faTimes} /></li>
+                            <li key={index}><FontAwesomeIcon icon={faTag} />{tag}</li>
                           ))}
                           </ul>
                           }
@@ -354,15 +348,23 @@ const Journal = () => {
               const handleSaveReading = async () => {
                 const readingId = readings[activeReading].id;
 
+   
+                setErrorMessageNote('Saved.');
+                document.querySelector('.save-wrapper .tip-2').classList.remove('fade-out')
+          
+                document.querySelector('.save-wrapper .tip-2').classList.add('fade-in-fwd')
+                setTimeout(() => {
+                  document.querySelector('.save-wrapper .tip-2').classList.add('fade-out')
+                }, 1500); 
+         
+
                 try {
-                  // Update tags and note in Firebase Firestore
                   const readingRef = doc(db, 'celestial', currentUser.uid, 'readings', readingId);
                   await updateDoc(readingRef, {
-                    tags: readingTags, // Update tags with current readingTags state
-                    note: note, // Update note with current note state
+                    tags: readingTags, 
+                    note: note, 
                   });
-              
-                  // Update the local state with the updated tags and note
+
                   const updatedReadings = readings.map(r => {
                     if (r.id === readingId) {
                       return {
@@ -375,10 +377,8 @@ const Journal = () => {
                   });
               
                   setReadings(updatedReadings);
-                  console.log('Document successfully updated!');
                 } catch (error) {
                   console.error('Error updating document:', error);
-                  // Handle error appropriately (e.g., show error message to user)
                 }
               };
               
@@ -394,7 +394,7 @@ const Journal = () => {
                             <img src={images[index]} className='card-image' alt="" />
                           </div>
                           <div className='card-text'>
-                            <h3><img src={star} alt="" /><span>{cardName}</span></h3>
+                            <h3><img src={star} className='spinning' alt="" /><span>{cardName}</span></h3>
                             <p>{interpretation}</p>
                           </div>
                         </div>

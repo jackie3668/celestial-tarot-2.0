@@ -56,6 +56,7 @@ const handleCloseAuth = () => {
             'label',
             '.clear',
             '.expand-details',
+            '.logo',
             {
               target: '.about-section',
               options: {
