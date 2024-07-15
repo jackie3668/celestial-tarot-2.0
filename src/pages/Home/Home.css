@@ -133,6 +133,10 @@
     font-size: 3vw;
     gap: 1vw;
   }
+  
+  .home .right div:nth-child(2) img {
+    width: 4vw;
+  }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */

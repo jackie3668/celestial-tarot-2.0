@@ -71,6 +71,10 @@
     width: 5vw;
     height: 5vw;
   }
+
+  .reading button img {
+    width: 4vw;
+  }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */

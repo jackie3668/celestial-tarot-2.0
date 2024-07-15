@@ -1,70 +1,53 @@
-# Getting Started with Create React App
+# 🌟 Celestial Tarot 🌙
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to **Celestial Tarot**, your personal tarot reading app powered by OpenAI! 🌌✨
 
-## Available Scripts
+## Features ✨
+- 🔮 **Insightful Tarot Readings**: Get deep, meaningful readings to guide your journey.
+- 📚 **Tarot Journal**: Build your own tarot journal to keep track of your readings.
+- 🏷️ **Tag and Save Readings**: Save your readings with customizable tags for easy reference.
+- 📝 **Add Notes**: Personalize your tarot journal by adding notes to each reading.
 
-In the project directory, you can run:
+## Get Started 🌟
+Visit the [Celestial Tarot Home Page](https://jackie3668.github.io/celestial-tarot-2.0/) to begin your journey into the mystical world of tarot. 🌠
 
-### `npm start`
+## How to Use 🌕
+1. **Input Your Question**: Start by entering a question or focus area for your reading.
+2. **Choose Your Design**: Select a design for your tarot cards from the available options.
+3. **Choose Your Spread**: Pick a tarot spread that suits your reading needs (e.g., Past-Present-Future, Celtic Cross).
+4. **Select and Flip Cards**: Click on the cards to select and flip them to reveal your insights.
+5. **Generate Your Insights**: Once all cards are selected, the app will generate your detailed tarot reading.
+6. **Add Tags or Notes**: Personalize your reading by adding tags and notes for future reference.
+7. **Save Your Reading**: Save your reading to your tarot journal.
+8. **View and Edit Your Journal**: Revisit your saved readings in your tarot journal. You can view, edit, and add more notes to each reading.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Tarot Journal 🌠
+- **Organize**: Keep all your readings organized in one place.
+- **Edit**: Update your journal entries with new insights or notes.
+- **Revisit**: Reflect on past readings and track your spiritual journey over time.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## About the Creator 🌙
+Created with love by **Jackie Shen**. Feel free to reach out if you have any questions or feedback!
 
-### `npm test`
+## Example Usage ✨
+1. **Input Your Question**: "What should I focus on this month?"
+2. **Choose Your Design**: Select a cosmic starry design.
+3. **Choose Your Spread**: Pick the "Three Card Spread".
+4. **Select and Flip Cards**: Click on three cards to reveal your past, present, and future insights.
+5. **Generate Your Insights**: The app provides detailed interpretations of your cards.
+6. **Add Tags or Notes**: Tag your reading with "monthly focus" and add notes like "Focus on self-care".
+7. **Save Your Reading**: Save it to your journal for future reference.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+✨ May the stars guide you and the cards reveal your path! ✨
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Contributing
+We welcome contributions! If you'd like to contribute, please fork the repository and use a feature branch. Pull requests are warmly welcome.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Happy Tarot Reading!** 🌟🔮
