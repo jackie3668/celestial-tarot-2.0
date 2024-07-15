@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/celestial-tarot-2.0/static/css/main.6378a96d.css",
+    "main.css": "/celestial-tarot-2.0/static/css/main.93c147b1.css",
     "main.js": "/celestial-tarot-2.0/static/js/main.2fc767eb.js",
     "static/media/64.jpg": "/celestial-tarot-2.0/static/media/64.84f08f16c59f6db5215f.jpg",
     "static/media/32.jpg": "/celestial-tarot-2.0/static/media/32.9abb5df6885e725fc32c.jpg",
@@ -167,11 +167,11 @@
     "static/media/undefined.png": "/celestial-tarot-2.0/static/media/undefined.5f08147fa0cb2fc66688.png",
     "static/media/loading.gif": "/celestial-tarot-2.0/static/media/loading.f57cb3ab60a875c64a10.gif",
     "index.html": "/celestial-tarot-2.0/index.html",
-    "main.6378a96d.css.map": "/celestial-tarot-2.0/static/css/main.6378a96d.css.map",
+    "main.93c147b1.css.map": "/celestial-tarot-2.0/static/css/main.93c147b1.css.map",
     "main.2fc767eb.js.map": "/celestial-tarot-2.0/static/js/main.2fc767eb.js.map"
   },
   "entrypoints": [
-    "static/css/main.6378a96d.css",
+    "static/css/main.93c147b1.css",
     "static/js/main.2fc767eb.js"
   ]
 }
