@@ -17,14 +17,15 @@
   background-color: rgba(255, 255, 255, 0.0);
   backdrop-filter: blur(50px);
   z-index: 3;
+  gap: 2vh;
 }
 
 .auth-modal form {
   position: relative;
   width: 60vw;
-  max-width: 600px;
+  max-width: 500px;
   background-color: rgba(255, 255, 255, 0.1);
-  padding: 10vh 3vw; 
+  padding: 10vh 8vw; 
   display: flex;
   flex-direction: column;
   border-radius: 0.5rem;
@@ -63,7 +64,7 @@
 
 .auth-modal input[type="email"],
 .auth-modal input[type="password"] {
-  width: 75%;
+  width: 100%;
   padding: 10px;
   margin-bottom: 16px;
   font-size: 1rem;
@@ -87,7 +88,10 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
 }
+
 
 .auth-modal button[type="submit"]:hover,
 .auth-modal button:hover {
@@ -116,4 +120,114 @@
   justify-content: flex-start;
   align-items: center;
   background-color: transparent;
+}
+
+.auth-modal .logo {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.auth-modal .logo img {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.auth-modal .logo h1 {
+  font-size: 2rem;
+  font-style: italic;
+}
+
+.auth-modal .toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.875rem;
+  gap: 0;
+  margin: 2vh 0;
+}
+
+.auth-modal .login,
+.auth-modal .register {
+  padding: 1vh 2vw;
+  width: 15vw;
+  text-align: center;
+}
+
+.auth-modal .login {
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  border: 1px solid white;
+}
+
+.auth-modal .register {
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  border: 1px solid white;
+}
+
+.auth-modal .register.active,
+.auth-modal .login.active {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.auth-modal input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+  font-family: "Poppins", sans-serif;
+  font-weight: 200;
+  font-size: 0.75rem;
+}
+
+.auth-modal .switch {
+  font-family: "Poppins", sans-serif;
+  font-weight: 200;
+  font-size: 0.75rem;
+}
+
+.auth-modal .google button {
+  background-color: #1c1c1c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  
+  .auth-modal form {
+    width: 80vw;
+    max-width: 500px;
+    padding: 10vh 10vw; 
+    gap: 2vh;
+  }
+  
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 601px) {
+    
+  .auth-modal form {
+    width: 80vw;
+    max-width: 500px;
+    padding: 10vh 8vw; 
+  }
+  
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .auth-modal form {
+    width: 80vw;
+    max-width: 500px;
+    padding: 10vh 4vw; 
+    gap: 2vh;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  /* CSS rules here */
 }

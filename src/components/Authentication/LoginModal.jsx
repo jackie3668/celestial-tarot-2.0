@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { doSignInWithEmailAndPassword } from '../../auth';
+import { doSignInWithEmailAndPassword, doSignInWithGoogle } from '../../auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes} from '@fortawesome/free-solid-svg-icons'; 
 import './Auth.css'
+import star from '../../assets/ui/star.png'
+import logo from '../../assets/images/Other-Pay-Method.png'
 
 
 const LoginModal = ({ handleSwitchToRegister, handleCloseAuth }) => {
@@ -10,6 +12,7 @@ const LoginModal = ({ handleSwitchToRegister, handleCloseAuth }) => {
     const [password, setPassword] = useState('');
     const [isSigningIn, setIsSigningIn] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [toggle, setToggle] = useState(true)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -32,18 +35,39 @@ const LoginModal = ({ handleSwitchToRegister, handleCloseAuth }) => {
             }
         }
     };
+    
+    const handleSignInWithGoogle = async () => {
+        try {
+            setIsSigningIn(true);
+            await doSignInWithGoogle(); 
+            setIsSigningIn(false);
+            handleCloseAuth()
+        } catch (error) {
+            setErrorMessage(error.message);
+            setIsSigningIn(false);
+        }
+    };
 
     return (
         <div className='auth-modal login'>
-            <form onSubmit={handleSubmit}>          
+            <form onSubmit={handleSubmit}>     
+                <div className="logo">
+                    <img src={star} alt="" />
+                    <h1>Celestial</h1>
+                    <img src={star} alt="" />
+                </div>
+                <div className="toggle">
+                    <div className={`login ${toggle ? 'active' : ''}`}  onClick={()=>{setToggle(true)}}>Login</div>
+                    <div className={`register ${toggle ? '' : 'active'}`} onClick={()=>{setToggle(false); handleSwitchToRegister()}}>Register</div>
+                </div>
                 <div className="close" onClick={handleCloseAuth} >
                     <FontAwesomeIcon icon={faTimes} />
                     Close
                 </div>
                 <div>
-                    <label>Email :</label>
                     <input
                         type="email"
+                        placeholder='Enter email'
                         autoComplete='email'
                         required
                         value={email}
@@ -51,20 +75,25 @@ const LoginModal = ({ handleSwitchToRegister, handleCloseAuth }) => {
                     />
                 </div>
                 <div>
-                    <label>Password :</label>
                     <input
                         type="password"
+                        placeholder='Enter password'
                         autoComplete='current-password'
                         required
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-
                 {errorMessage && (
                     <span>{errorMessage}</span>
                 )}
 
+                <div className='google'>
+                    <button onClick={handleSignInWithGoogle} disabled={isSigningIn}>
+                        <img src={logo} alt="" />
+                        {isSigningIn? 'Signing In with Google...' : 'Or Sign In with Google'}
+                    </button>
+                </div>
                 <button type='submit' disabled={isSigningIn}>
                     {isSigningIn ? 'Signing In...' : 'Sign In'}
                 </button>

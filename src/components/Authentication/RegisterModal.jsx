@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../authContext';
-import { doCreateUserWithEmailAndPassword, doSignInWithGoogle, doSendEmailVerification } from '../../auth';
+import { doCreateUserWithEmailAndPassword, doSignInWithGoogle } from '../../auth';
 import { db } from '../../firebase';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes} from '@fortawesome/free-solid-svg-icons'
 import './Auth.css'
+import star from '../../assets/ui/star.png'
+import logo from '../../assets/images/Other-Pay-Method.png'
 
 const RegisterModal = ({ handleSwitchToLogin, handleCloseAuth }) => {
     const [email, setEmail] = useState('');
@@ -16,6 +18,7 @@ const RegisterModal = ({ handleSwitchToLogin, handleCloseAuth }) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [ipAddress, setIpAddress] = useState(null);
     const [isEmailVerified, setIsEmailVerified] = useState(false);
+    const [toggle, setToggle] = useState(false)
 
     useEffect(() => {
         const fetchIpAddress = async () => {
@@ -83,16 +86,25 @@ const RegisterModal = ({ handleSwitchToLogin, handleCloseAuth }) => {
         <>
             <main className='auth-modal register'>
                 <form onSubmit={onSubmit}>
+                    <div className="logo">
+                        <img src={star} alt="" />
+                        <h1>Celestial</h1>
+                        <img src={star} alt="" />
+                    </div>
+                    <div className="toggle">
+                        <div className={`login ${toggle ? 'active' : ''}`}  onClick={()=>{setToggle(true); handleSwitchToLogin()}}>Login</div>
+                        <div className={`register ${toggle ? '' : 'active'}`} onClick={()=>{setToggle(false);}}>Register</div>
+                    </div>
                     <div className="close" onClick={handleCloseAuth} >
                         <FontAwesomeIcon icon={faTimes} />
                         Close
                     </div>
                     <div>
-                        <label>Email :</label>
                         <input
                             disabled={isRegistering}
                             type="email"
                             autoComplete='email'
+                            placeholder='Enter email'
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -100,11 +112,11 @@ const RegisterModal = ({ handleSwitchToLogin, handleCloseAuth }) => {
                     </div>
 
                     <div>
-                        <label>Password :</label>
                         <input
                             disabled={isRegistering}
                             type="password"
                             autoComplete='new-password'
+                            placeholder='Enter password'
                             required
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -112,11 +124,11 @@ const RegisterModal = ({ handleSwitchToLogin, handleCloseAuth }) => {
                     </div>
 
                     <div>
-                        <label>Confirm Password :</label>
                         <input
                             disabled={isRegistering}
                             type="password"
                             autoComplete='off'
+                            placeholder='Enter password again'
                             required
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
@@ -133,8 +145,9 @@ const RegisterModal = ({ handleSwitchToLogin, handleCloseAuth }) => {
                     >
                         {isRegistering && !isEmailVerified ? 'Signing Up...' : 'Sign Up'}
                     </button>
-                    <div>
+                    <div className='google'>
                         <button onClick={handleSignInWithGoogle} disabled={isRegistering}>
+                            <img src={logo} alt="" />
                             {isRegistering ? 'Signing In with Google...' : 'Or Sign In with Google'}
                         </button>
                     </div>
