@@ -59,6 +59,14 @@ input {
   /* CSS rules here */
 }
 
+/* Large devices (extra tall height, 992px and up) */
+@media only screen and (max-height: 992px) {
+  .reading-container {
+    margin-top: 15vh;
+    height: 70vh;
+    gap: 5vh;
+  }
+}
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {

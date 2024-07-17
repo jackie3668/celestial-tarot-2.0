@@ -146,8 +146,9 @@ const Result = ({ design, question, cards, isLoading, setIsLoading, result, note
   };
 
   const handleRestart = () => {
-    window.location.reload(); 
+    window.location.href = './reading'; 
 };
+
 
   return (
     <div className='result'>
