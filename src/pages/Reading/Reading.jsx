@@ -136,17 +136,13 @@ const Reading = ({ handleSwitchToRegister, handleSwitchToLogin }) => {
 
     
         const prompt = `My question is: ${question}. I drew ${cards.length} cards. They are: ${cardStates}. Return 35 words per card, formatted like 'Card Name (Reversal Status) + ':'', separated by line break, start with the card name at the beginning. Take upright/reverse into account. Lastly, give one paragraph summary start with 'Summary:'. (35 words).`;
-    
-        console.log("Prompt:", prompt);
-    
+        
         const response = await axios.post('https://celestial-backend-bjdf.onrender.com/sendMsgToOpenAI', {
             userMessage: prompt,
         }, {
             timeout: 60000, 
         });
-    
-        console.log("Axios Response:", response);
-        setResult(response.data.generatedResponse);
+            setResult(response.data.generatedResponse);
         } catch (error) {
         console.error('Error fetching data:', error);
         }

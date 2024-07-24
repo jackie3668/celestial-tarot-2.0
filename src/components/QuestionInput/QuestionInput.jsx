@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import arrow from '../../assets/ui/right-arrow.png';
 import './QuestionInput.css';
 
 const QuestionInput = ({ question, setQuestion }) => {
@@ -16,37 +15,40 @@ const QuestionInput = ({ question, setQuestion }) => {
   const [inputValue, setInputValue] = useState(question); // Initialize inputValue with question prop
 
   useEffect(() => {
-    setInputValue(question); // Update inputValue whenever question prop changes
+    setInputValue(question); 
   }, [question]);
 
-  const handleQuestionSubmit = (e) => {
-    e.preventDefault();
-    setQuestion(inputValue.trim());
-    setInputValue(''); // Clear input after submitting
-  };
-
   const handleFocus = () => {
+    if (question) {
+      return;
+    }
     setIsFocused(true);
   };
 
   const handleBlur = () => {
     setTimeout(() => {
       setIsFocused(false);
-    }, 300); 
+    }, 300);
   };
-  
+
   const handleChange = (e) => {
-    setInputValue(e.target.value);
+    const value = e.target.value;
+    setInputValue(value);
+    setQuestion(value.trim());
   };
 
   const handleSuggestionClick = (suggestion) => {
-    setQuestion(suggestion); 
-    setInputValue(suggestion); 
-    setIsFocused(false); 
+    setQuestion(suggestion);
+    setInputValue(suggestion);
+    setIsFocused(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
   };
 
   return (
-    <form className='question' onSubmit={handleQuestionSubmit}>
+    <form className='question' onSubmit={handleSubmit}>
       <div className={`input-container glass ${isFocused ? 'focused' : ''}`}>
         <input
           type="text"
@@ -59,10 +61,6 @@ const QuestionInput = ({ question, setQuestion }) => {
           onBlur={handleBlur}
           onChange={handleChange}
         />
-        <div className="vertical-line"></div>
-        <button type="submit">
-          <img src={arrow} alt="" />
-        </button>
       </div>
       <ul className={`dropdown glass ${isFocused ? 'focused' : ''}`}>
         {suggestions.map((suggestion, index) => (

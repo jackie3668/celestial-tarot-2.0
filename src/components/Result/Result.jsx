@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import loadingGif from '../../assets/images/loading.gif';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faPlus, faTimes, faTag } from '@fortawesome/free-solid-svg-icons'; 
@@ -21,6 +22,8 @@ const Result = ({ design, question, cards, isLoading, setIsLoading, result, note
     'Harmonizing Mind and Soul...',
     'Awakening Your True Self...'
   ];
+
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(()=> {
     const imagePaths = cards.map((card) => {
@@ -146,7 +149,7 @@ const Result = ({ design, question, cards, isLoading, setIsLoading, result, note
   };
 
   const handleRestart = () => {
-    window.location.href = './reading'; 
+    setRefreshKey(prevKey => prevKey + 1);
 };
 
 
@@ -235,7 +238,7 @@ const Result = ({ design, question, cards, isLoading, setIsLoading, result, note
                 </div>) : <></>}
                 <div className='button-wrapper'>
                   {save ? <button className='save' onClick={handleSaveReading} >Save reading</button> : <></>}
-                  <button className='restart' onClick={handleRestart}>Restart</button>
+                  <Link to='/'><button className='restart'>Back</button></Link>
                 </div>
               </div>
             </>
