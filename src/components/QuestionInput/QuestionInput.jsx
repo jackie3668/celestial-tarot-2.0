@@ -12,7 +12,7 @@ const QuestionInput = ({ question, setQuestion }) => {
     "What should I be aware of in my spiritual journey?"
   ]);
 
-  const [inputValue, setInputValue] = useState(question); // Initialize inputValue with question prop
+  const [inputValue, setInputValue] = useState(question); 
 
   useEffect(() => {
     setInputValue(question); 
@@ -44,7 +44,7 @@ const QuestionInput = ({ question, setQuestion }) => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
+    e.preventDefault(); 
   };
 
   return (
