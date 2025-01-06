@@ -136,8 +136,8 @@ const Reading = ({ handleSwitchToRegister, handleSwitchToLogin }) => {
 
     
         const prompt = `My question is: ${question}. I drew ${cards.length} cards. They are: ${cardStates}. Return 35 words per card, formatted like 'Card Name (Reversal Status) + ':'', separated by line break, start with the card name at the beginning. Take upright/reverse into account. Lastly, give one paragraph summary start with 'Summary:'. (35 words).`;
-        
-        const response = await axios.post('https://journal-app-backend-8szt.onrender.com/sendMsgToOpenAI', {
+
+        const response = await axios.post('http://localhost:5000/sendMsgToOpenAI', {
             userMessage: prompt,
         }, {
             timeout: 60000, 
