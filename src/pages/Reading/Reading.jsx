@@ -137,7 +137,7 @@ const Reading = ({ handleSwitchToRegister, handleSwitchToLogin }) => {
     
         const prompt = `My question is: ${question}. I drew ${cards.length} cards. They are: ${cardStates}. Return 35 words per card, formatted like 'Card Name (Reversal Status) + ':'', separated by line break, start with the card name at the beginning. Take upright/reverse into account. Lastly, give one paragraph summary start with 'Summary:'. (35 words).`;
         
-        const response = await axios.post('https://celestial-backend-bjdf.onrender.com/sendMsgToOpenAI', {
+        const response = await axios.post('https://journal-app-backend-8szt.onrender.com/sendMsgToOpenAI', {
             userMessage: prompt,
         }, {
             timeout: 60000, 
@@ -194,21 +194,17 @@ const Reading = ({ handleSwitchToRegister, handleSwitchToLogin }) => {
             <div className="shuffle-container hide">
                 <Shuffle {...readingProps}/>
                 {selectedCards && spreadData[spread] && selectedCards.length === spreadData[spread].length ? (
-                // If the number of selected cards matches the spread length
                 cards.length === spreadData[spread].length ? (
-                    // If the number of flipped cards matches the spread length
                     <button onClick={handleGetResult} className='floating' id='get-results'>
                     CLICK TO GET RESULT 
                     <img src={arrow} alt="" />
                     </button>
                 ) : (
-                    // If not all cards are flipped
                     <button className='floating' id='get-results'>
                     FLIP THE CARDS
                     </button>
                 )
                 ) : (
-                // If not all cards are selected
                 <button className='hide' id='get-results'>
                     CLICK TO GET RESULT 
                     <img src={arrow} alt="" />
