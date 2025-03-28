@@ -5,9 +5,12 @@
   height: 100vh;
   width: 100vw;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 10vh 4vw;
+  padding-top: 25vh;
+  gap: 20vh;
 }
 
 .home .left {
@@ -15,27 +18,27 @@
   flex-direction: column;
 }
 
-.home .left div:nth-child(1) {
+.home .left div:nth-child(2) {
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: center;
   gap: 0.5vw;
   margin-bottom: 2vh;
   font-size: 1.25vw;
 }
 
-.home .left div:nth-child(1) img {
+.home .left div:nth-child(2) img {
   width: 2vw;
   height: 2vw;
 }
 
-.home .left div:nth-child(1) span {
+.home .left div:nth-child(2) span {
   border: 1px solid white;
   border-radius: 100px;
   padding: 0 1vw;
 }
 
-.home .left div:nth-child(2) {
+.home .left div:nth-child(1) {
   font-family: "Cormorant Garamond", serif;
   font-size: 11vw;
   font-style: italic;
@@ -52,12 +55,18 @@
 .home .right {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 3vh;
+}
+
+.home .right p {
+  text-align: center;
 }
 
 .home .right div:nth-child(1) {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.5vw;
   font-size: 1.5vw;
   font-weight: 300;

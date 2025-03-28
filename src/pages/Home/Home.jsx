@@ -22,21 +22,21 @@ const Home = () => {
         <div className="content">
           <div className="left">
             <div>
+              Celestial Tarot
+            </div>
+            <div>
               <img src={star} className='spinning' />
               <p>ECHOES OF</p>
               <span>THE STARS</span>
             </div>
-            <div>
-              Celestial
-            </div>
-            <div>
+            {/* <div>
               begins here
-            </div>
+            </div> */}
           </div>
           <div className="right">
             <div>
               <img src={star} className='spinning' />
-              <p><span>Stars </span>illumination your<br /><span>Celestial path</span></p>
+              <p><span>Stars </span>illuminating your<br /><span>Celestial path</span></p>
             </div>
             <div>
               <Link to='./reading' className='floating' >
