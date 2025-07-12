@@ -31,7 +31,7 @@ const handleCloseAuth = () => {
 }
   return (
     <AuthProvider>
-      <Router basename='celestial-tarot-2.0'>
+      <Router basename='/'>
         <AnimatedCursor
           innerSize={8}
           outerSize={12}

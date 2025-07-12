@@ -2,7 +2,6 @@
   "name": "celestial-tarot-2.0",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://jackie3668.github.io/celestial-tarot-2.0/",
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
@@ -25,9 +24,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "node deploy.js"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
